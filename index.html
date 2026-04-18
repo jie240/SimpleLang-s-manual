@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpLang 教学文档 · 一小时速成</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1e1e2f;
+            background: #fafbfc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+            width: 100%;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        .lang-switch {
+            background: #f1f5f9;
+            border-radius: 30px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .lang-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        /* 文档布局：侧边栏 + 内容 */
+        .doc-wrapper {
+            display: flex;
+            gap: 40px;
+            margin: 40px 0 60px;
+        }
+
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .sidebar h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+
+        .sidebar a:hover {
+            background: #eef2ff;
+            color: #3b82f6;
+        }
+
+        .sidebar a.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+
+        .content h2 {
+            font-size: 2rem;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #0f172a;
+        }
+
+        .content h3 {
+            font-size: 1.5rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            color: #334155;
+        }
+
+        .content code {
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+
+        .content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-family: 'Menlo', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .content .note {
+            background: #eef2ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        .content th, .content td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .content th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 24px 0;
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .doc-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+                max-height: none;
+                margin-bottom: 20px;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-links {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航 -->
+        <nav class="navbar">
+            <a href="https://jie240.github.io/SimpleLangIDE/" class="logo">
+                SimpLang <span>v1.0</span>
+            </a>
+            <div class="nav-links">
+                <a href="https://jie240.github.io/SimpleLangIDE/" data-key="nav_home">首页</a>
+                <a href="#" style="color:#3b82f6;" data-key="nav_docs">文档</a>
+                <a href="https://jie240.github.io/SimpleLangIDE/#download" data-key="nav_download">下载</a>
+                <a href="https://jie240.github.io/SimpleLangIDE-s-Blog/" target="_blank" data-key="nav_blog">博客</a>
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="zh">中文</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+            <div>
+                <a href="https://exe1.webgetstore.com/2026/04/18/8c78ee2e0e076d506ec96fc3c22865ed.exe?sg=9d914afb52d5bcde967ef008d9bf7fcb&e=69e32c79&fileName=SimpleLangIDE%20v1.0.exe&fi=283160994" class="btn" data-key="nav_download_btn">下载 IDE</a>
+            </div>
+        </nav>
+
+        <!-- 文档主体 -->
+        <div class="doc-wrapper">
+            <!-- 侧边栏导航 -->
+            <aside class="sidebar">
+                <h4 data-key="sidebar_quickstart">📘 快速开始</h4>
+                <ul>
+                    <li><a href="#installation" data-key="sidebar_install">安装与运行</a></li>
+                    <li><a href="#hello-world" data-key="sidebar_hello">第一个程序</a></li>
+                </ul>
+                <h4 data-key="sidebar_basics">📦 基础语法</h4>
+                <ul>
+                    <li><a href="#variables" data-key="sidebar_vars">变量与赋值</a></li>
+                    <li><a href="#data-types" data-key="sidebar_types">数据类型</a></li>
+                    <li><a href="#operators" data-key="sidebar_ops">运算符</a></li>
+                    <li><a href="#comments" data-key="sidebar_comments">注释</a></li>
+                </ul>
+                <h4 data-key="sidebar_control">🎛️ 控制流</h4>
+                <ul>
+                    <li><a href="#if-else" data-key="sidebar_if">if-else 条件</a></li>
+                    <li><a href="#while" data-key="sidebar_while">while 循环</a></li>
+                </ul>
+                <h4 data-key="sidebar_func">🧩 函数</h4>
+                <ul>
+                    <li><a href="#func-def" data-key="sidebar_func_def">定义与调用</a></li>
+                    <li><a href="#return" data-key="sidebar_return">返回值</a></li>
+                    <li><a href="#recursion" data-key="sidebar_recursion">递归</a></li>
+                </ul>
+                <h4 data-key="sidebar_arrays">🗂️ 数组与字符串</h4>
+                <ul>
+                    <li><a href="#arrays" data-key="sidebar_arrays_def">数组声明与访问</a></li>
+                    <li><a href="#strings" data-key="sidebar_strings">字符串操作</a></li>
+                </ul>
+                <h4 data-key="sidebar_builtin">⚙️ 内置函数</h4>
+                <ul>
+                    <li><a href="#builtin-len" data-key="sidebar_len">len()</a></li>
+                    <li><a href="#builtin-convert" data-key="sidebar_convert">to_int() / to_str()</a></li>
+                </ul>
+                <h4 data-key="sidebar_io">🖥️ 输入输出</h4>
+                <ul>
+                    <li><a href="#print" data-key="sidebar_print">print</a></li>
+                    <li><a href="#input" data-key="sidebar_input">input / input_str</a></li>
+                </ul>
+            </aside>
+
+            <!-- 内容区 -->
+            <main class="content">
+                <h1 data-key="doc_title">SimpLang 教学文档</h1>
+                <p data-key="doc_intro">欢迎！SimpLang 是一门语法极简、动态类型的解释型语言。如果你有 C 语言基础，半小时即可掌握。本文档将带你从零开始，逐步掌握 SimpLang 的所有特性。</p>
+
+                <!-- 安装 -->
+                <h2 id="installation" data-key="install_title">📥 安装与运行</h2>
+                <p data-key="install_desc">SimpLang 提供两种运行方式：</p>
+                <ul style="margin-left: 24px; margin-bottom: 20px;">
+                    <li><strong data-key="install_ide_label">图形化 IDE</strong><span data-key="install_ide_text">：下载 <code>SimpleLangIDE.exe</code>，双击运行，即可编写和运行代码。</span></li>
+                    <li><strong data-key="install_cli_label">命令行解释器</strong><span data-key="install_cli_text">：使用 Python 运行解释器脚本（需要 Python 3.6+）。</span></li>
+                </ul>
+                <p data-key="install_recommend">推荐初学者使用 IDE，它内置了语法高亮、一键运行和打包功能。</p>
+
+                <h2 id="hello-world" data-key="hello_title">👋 第一个程序：Hello, World</h2>
+                <p data-key="hello_desc">打开 IDE，在编辑区输入以下代码，按 <code>F5</code> 运行：</p>
+                <pre><code>print "Hello, World!";</code></pre>
+                <p data-key="hello_output">输出区将显示 <code>Hello, World!</code>。恭喜你，已经成功运行了第一个 SimpLang 程序！</p>
+
+                <!-- 变量 -->
+                <h2 id="variables" data-key="vars_title">📌 变量与赋值</h2>
+                <p data-key="vars_desc">使用 <code>var</code> 关键字声明变量。变量名由字母、数字和下划线组成，不能以数字开头。</p>
+                <pre><code>var age = 25;
+var name = "Alice";
+var flag = true;      // Boolean: 0 is false, non-zero is true
+var x;                // Uninitialized, defaults to 0</code></pre>
+                <p data-key="vars_assign_desc">已声明的变量可以直接赋值：</p>
+                <pre><code>age = 26;
+name = "Bob";</code></pre>
+                <div class="note">
+                    💡 <strong data-key="note_tip">提示</strong><span data-key="vars_note">：SimpLang 是动态类型的，变量的类型由赋值决定，可以随时改变类型。</span>
+                </div>
+
+                <h2 id="data-types" data-key="types_title">🔢 数据类型</h2>
+                <p data-key="types_desc">SimpLang 支持以下基本类型：</p>
+                <table>
+                    <tr><th data-key="types_table_type">类型</th><th data-key="types_table_example">示例</th><th data-key="types_table_desc">说明</th></tr>
+                    <tr><td data-key="type_number">数字</td><td><code>10, 3.14, -5</code></td><td data-key="type_number_desc">整数和浮点数统一为数字类型</td></tr>
+                    <tr><td data-key="type_string">字符串</td><td><code>"hello"</code></td><td data-key="type_string_desc">用双引号包围，支持转义 <code>\"</code> 和 <code>\n</code></td></tr>
+                    <tr><td data-key="type_bool">布尔</td><td><code>true / false</code></td><td data-key="type_bool_desc">用数字表示，条件判断中 0 为假，非0为真</td></tr>
+                    <tr><td data-key="type_array">数组</td><td><code>var arr[10];</code></td><td data-key="type_array_desc">固定大小的一维数组，元素默认为 0</td></tr>
+                </table>
+
+                <h2 id="operators" data-key="operators_title">➕ 运算符</h2>
+                <p data-key="operators_desc">SimpLang 支持常见的算术、比较和逻辑运算符。</p>
+                <h3 data-key="operators_arith">算术运算符</h3>
+                <table>
+                    <tr><th data-key="op">运算符</th><th data-key="meaning">含义</th><th data-key="example">示例</th></tr>
+                    <tr><td><code>+</code></td><td data-key="op_add">加法 / 字符串连接</td><td><code>3 + 5</code> → 8；<code>"a" + "b"</code> → "ab"</td></tr>
+                    <tr><td><code>-</code></td><td data-key="op_sub">减法</td><td><code>10 - 4</code> → 6</td></tr>
+                    <tr><td><code>*</code></td><td data-key="op_mul">乘法</td><td><code>2 * 3</code> → 6</td></tr>
+                    <tr><td><code>/</code></td><td data-key="op_div">除法</td><td><code>7 / 2</code> → 3.5</td></tr>
+                    <tr><td><code>%</code></td><td data-key="op_mod">取模</td><td><code>7 % 2</code> → 1</td></tr>
+                </table>
+                <h3 data-key="operators_compare">比较运算符</h3>
+                <table>
+                    <tr><td><code>==</code></td><td data-key="eq">等于</td><td><code>!=</code></td><td data-key="ne">不等于</td></tr>
+                    <tr><td><code>&lt;</code></td><td data-key="lt">小于</td><td><code>&gt;</code></td><td data-key="gt">大于</td></tr>
+                    <tr><td><code>&lt;=</code></td><td data-key="le">小于等于</td><td><code>&gt;=</code></td><td data-key="ge">大于等于</td></tr>
+                </table>
+                <h3 data-key="operators_logic">逻辑运算符</h3>
+                <table>
+                    <tr><td><code>&&</code></td><td data-key="and">逻辑与</td><td><code>||</code></td><td data-key="or">逻辑或</td><td><code>!</code></td><td data-key="not">逻辑非</td></tr>
+                </table>
+                <pre><code>var a = 5;
+var b = 10;
+if (a > 0 && b < 20) {
+    print "Both conditions are true";
+}</code></pre>
+
+                <h2 id="comments" data-key="comments_title">💬 注释</h2>
+                <p data-key="comments_desc">单行注释使用 <code>//</code>，多行注释使用 <code>/* ... */</code>。</p>
+                <pre><code>// This is a single-line comment
+var x = 10;   // Can also be placed after a statement
+
+/*
+   This is a
+   multi-line comment
+*/</code></pre>
+
+                <h2 id="if-else" data-key="if_title">🚦 if-else 条件语句</h2>
+                <pre><code>var score = 85;
+if (score >= 90) {
+    print "Excellent";
+} else if (score >= 60) {
+    print "Pass";
+} else {
+    print "Fail";
+}</code></pre>
+                <p data-key="if_note">条件表达式必须用圆括号 <code>( )</code> 包围，执行体用花括号 <code>{ }</code>。</p>
+
+                <h2 id="while" data-key="while_title">🔄 while 循环</h2>
+                <pre><code>var i = 0;
+while (i < 5) {
+    print "i = ", i, "\n";
+    i = i + 1;
+}</code></pre>
+
+                <h2 id="func-def" data-key="func_title">🧩 函数定义与调用</h2>
+                <p data-key="func_desc">使用 <code>func</code> 关键字定义函数。函数可以接受多个参数，并支持递归。</p>
+                <pre><code>func add(a, b) {
+    return a + b;
+}
+
+var result = add(3, 5);
+print result;   // Output 8</code></pre>
+                <h3 id="return" data-key="return_title">返回值</h3>
+                <p data-key="return_desc">使用 <code>return</code> 语句返回值。如果没有 <code>return</code>，函数默认返回 0。</p>
+                <h3 id="recursion" data-key="recursion_title">递归</h3>
+                <p data-key="recursion_desc">函数可以直接或间接调用自身。例如计算阶乘：</p>
+                <pre><code>func factorial(n) {
+    if (n <= 1) { return 1; }
+    return n * factorial(n - 1);
+}</code></pre>
+
+                <h2 id="arrays" data-key="arrays_title">🗂️ 数组</h2>
+                <p data-key="arrays_desc">声明数组时需要指定大小：</p>
+                <pre><code>var numbers[5];       // Create array of length 5, elements default to 0
+numbers[0] = 10;
+numbers[1] = 20;</code></pre>
+                <p data-key="arrays_access">访问数组元素：</p>
+                <pre><code>print numbers[0];      // 10
+var idx = 1;
+print numbers[idx];    // 20</code></pre>
+                <div class="note">
+                    ⚠️ <strong data-key="warning">注意</strong><span data-key="arrays_note">：数组索引从 0 开始，访问越界会导致运行时错误。</span>
+                </div>
+
+                <h2 id="strings" data-key="strings_title">📝 字符串</h2>
+                <p data-key="strings_desc">字符串可以用 <code>+</code> 进行拼接：</p>
+                <pre><code>var greeting = "Hello, " + "world!";
+print greeting;</code></pre>
+                <p data-key="strings_escape">字符串可以包含转义字符：</p>
+                <pre><code>print "First line\nSecond line";
+print "She said: \"Hello!\"";</code></pre>
+
+                <h2 id="builtin-len" data-key="builtin_title">⚙️ 内置函数</h2>
+                <h3>len(str)</h3>
+                <p data-key="len_desc">返回字符串的长度。</p>
+                <pre><code>var s = "SimpLang";
+print len(s);   // 8</code></pre>
+                <h3 id="builtin-convert">to_int(str) / to_str(num)</h3>
+                <p data-key="convert_desc">类型转换函数。</p>
+                <pre><code>var numStr = "42";
+var num = to_int(numStr);   // 42
+var str = to_str(100);      // "100"</code></pre>
+
+                <h2 id="print" data-key="io_title">🖥️ 输入与输出</h2>
+                <h3>print</h3>
+                <p data-key="print_desc"><code>print</code> 可以输出多个值，用逗号分隔，它们会被直接拼接输出（无自动空格）。</p>
+                <pre><code>print "x = ", x, "\n";</code></pre>
+                <h3 id="input">input 和 input_str</h3>
+                <p data-key="input_desc"><code>input</code> 读取数字，<code>input_str</code> 读取字符串。在 IDE 中会弹出输入对话框。</p>
+                <pre><code>var age;
+print "Please enter age: ";
+input age;
+print "Your age is: ", age;
+
+var name;
+print "Please enter name: ";
+input_str name;
+print "Hello, ", name;</code></pre>
+
+                <h2 data-key="pack_title">📦 打包为 EXE</h2>
+                <p data-key="pack_desc">在 SimpLang IDE 中，点击菜单 <strong>运行 → 打包为 EXE...</strong>，即可将当前脚本编译成独立的 Windows 可执行文件。生成的 EXE 无需安装任何依赖，可直接运行。</p>
+
+                <p style="margin-top: 48px;" data-key="congrats">🎉 恭喜！你已经完成了 SimpLang 的全部基础学习。现在可以打开 IDE，开始你的创作之旅！</p>
+            </main>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div data-key="footer_copyright">© 2025 SimpLang 团队 · 基于 MIT 协议开源</div>
+            <div>
+                <a href="https://github.com/jie240/SimpleLangIDE" target="_blank">GitHub</a> · 
+                <a data-key="footer_feedback">问题反馈:137196836@qq.com</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 多语言文本库
+        const translations = {
+            zh: {
+                nav_home: "首页",
+                nav_docs: "文档",
+                nav_download: "下载",
+                nav_blog: "博客",
+                nav_download_btn: "下载 IDE",
+                sidebar_quickstart: "📘 快速开始",
+                sidebar_install: "安装与运行",
+                sidebar_hello: "第一个程序",
+                sidebar_basics: "📦 基础语法",
+                sidebar_vars: "变量与赋值",
+                sidebar_types: "数据类型",
+                sidebar_ops: "运算符",
+                sidebar_comments: "注释",
+                sidebar_control: "🎛️ 控制流",
+                sidebar_if: "if-else 条件",
+                sidebar_while: "while 循环",
+                sidebar_func: "🧩 函数",
+                sidebar_func_def: "定义与调用",
+                sidebar_return: "返回值",
+                sidebar_recursion: "递归",
+                sidebar_arrays: "🗂️ 数组与字符串",
+                sidebar_arrays_def: "数组声明与访问",
+                sidebar_strings: "字符串操作",
+                sidebar_builtin: "⚙️ 内置函数",
+                sidebar_len: "len()",
+                sidebar_convert: "to_int() / to_str()",
+                sidebar_io: "🖥️ 输入输出",
+                sidebar_print: "print",
+                sidebar_input: "input / input_str",
+                doc_title: "SimpLang 教学文档",
+                doc_intro: "欢迎！SimpLang 是一门语法极简、动态类型的解释型语言。如果你有 C 语言基础，半小时即可掌握。本文档将带你从零开始，逐步掌握 SimpLang 的所有特性。",
+                install_title: "📥 安装与运行",
+                install_desc: "SimpLang 提供两种运行方式：",
+                install_ide_label: "图形化 IDE",
+                install_ide_text: "：下载 <code>SimpleLangIDE.exe</code>，双击运行，即可编写和运行代码。",
+                install_cli_label: "命令行解释器",
+                install_cli_text: "：使用 Python 运行解释器脚本（需要 Python 3.6+）。",
+                install_recommend: "推荐初学者使用 IDE，它内置了语法高亮、一键运行和打包功能。",
+                hello_title: "👋 第一个程序：Hello, World",
+                hello_desc: "打开 IDE，在编辑区输入以下代码，按 <code>F5</code> 运行：",
+                hello_output: "输出区将显示 <code>Hello, World!</code>。恭喜你，已经成功运行了第一个 SimpLang 程序！",
+                vars_title: "📌 变量与赋值",
+                vars_desc: "使用 <code>var</code> 关键字声明变量。变量名由字母、数字和下划线组成，不能以数字开头。",
+                vars_assign_desc: "已声明的变量可以直接赋值：",
+                note_tip: "提示",
+                vars_note: "：SimpLang 是动态类型的，变量的类型由赋值决定，可以随时改变类型。",
+                types_title: "🔢 数据类型",
+                types_desc: "SimpLang 支持以下基本类型：",
+                types_table_type: "类型",
+                types_table_example: "示例",
+                types_table_desc: "说明",
+                type_number: "数字",
+                type_number_desc: "整数和浮点数统一为数字类型",
+                type_string: "字符串",
+                type_string_desc: "用双引号包围，支持转义 \\\" 和 \\n",
+                type_bool: "布尔",
+                type_bool_desc: "用数字表示，条件判断中 0 为假，非0为真",
+                type_array: "数组",
+                type_array_desc: "固定大小的一维数组，元素默认为 0",
+                operators_title: "➕ 运算符",
+                operators_desc: "SimpLang 支持常见的算术、比较和逻辑运算符。",
+                operators_arith: "算术运算符",
+                op: "运算符",
+                meaning: "含义",
+                example: "示例",
+                op_add: "加法 / 字符串连接",
+                op_sub: "减法",
+                op_mul: "乘法",
+                op_div: "除法",
+                op_mod: "取模",
+                operators_compare: "比较运算符",
+                eq: "等于",
+                ne: "不等于",
+                lt: "小于",
+                gt: "大于",
+                le: "小于等于",
+                ge: "大于等于",
+                operators_logic: "逻辑运算符",
+                and: "逻辑与",
+                or: "逻辑或",
+                not: "逻辑非",
+                comments_title: "💬 注释",
+                comments_desc: "单行注释使用 <code>//</code>，多行注释使用 <code>/* ... */</code>。",
+                if_title: "🚦 if-else 条件语句",
+                if_note: "条件表达式必须用圆括号 <code>( )</code> 包围，执行体用花括号 <code>{ }</code>。",
+                while_title: "🔄 while 循环",
+                func_title: "🧩 函数定义与调用",
+                func_desc: "使用 <code>func</code> 关键字定义函数。函数可以接受多个参数，并支持递归。",
+                return_title: "返回值",
+                return_desc: "使用 <code>return</code> 语句返回值。如果没有 <code>return</code>，函数默认返回 0。",
+                recursion_title: "递归",
+                recursion_desc: "函数可以直接或间接调用自身。例如计算阶乘：",
+                arrays_title: "🗂️ 数组",
+                arrays_desc: "声明数组时需要指定大小：",
+                arrays_access: "访问数组元素：",
+                warning: "注意",
+                arrays_note: "：数组索引从 0 开始，访问越界会导致运行时错误。",
+                strings_title: "📝 字符串",
+                strings_desc: "字符串可以用 <code>+</code> 进行拼接：",
+                strings_escape: "字符串可以包含转义字符：",
+                builtin_title: "⚙️ 内置函数",
+                len_desc: "返回字符串的长度。",
+                convert_desc: "类型转换函数。",
+                io_title: "🖥️ 输入与输出",
+                print_desc: "<code>print</code> 可以输出多个值，用逗号分隔，它们会被直接拼接输出（无自动空格）。",
+                input_desc: "<code>input</code> 读取数字，<code>input_str</code> 读取字符串。在 IDE 中会弹出输入对话框。",
+                pack_title: "📦 打包为 EXE",
+                pack_desc: "在 SimpLang IDE 中，点击菜单 <strong>运行 → 打包为 EXE...</strong>，即可将当前脚本编译成独立的 Windows 可执行文件。生成的 EXE 无需安装任何依赖，可直接运行。",
+                congrats: "🎉 恭喜！你已经完成了 SimpLang 的全部基础学习。现在可以打开 IDE，开始你的创作之旅！",
+                footer_copyright: "© 2025 SimpLang 团队 · 基于 MIT 协议开源",
+                footer_feedback: "问题反馈:137196836@qq.com"
+            },
+            en: {
+                nav_home: "Home",
+                nav_docs: "Docs",
+                nav_download: "Download",
+                nav_blog: "Blog",
+                nav_download_btn: "Download IDE",
+                sidebar_quickstart: "📘 Quick Start",
+                sidebar_install: "Installation",
+                sidebar_hello: "First Program",
+                sidebar_basics: "📦 Basics",
+                sidebar_vars: "Variables",
+                sidebar_types: "Data Types",
+                sidebar_ops: "Operators",
+                sidebar_comments: "Comments",
+                sidebar_control: "🎛️ Control Flow",
+                sidebar_if: "if-else",
+                sidebar_while: "while Loop",
+                sidebar_func: "🧩 Functions",
+                sidebar_func_def: "Definition & Call",
+                sidebar_return: "Return Values",
+                sidebar_recursion: "Recursion",
+                sidebar_arrays: "🗂️ Arrays & Strings",
+                sidebar_arrays_def: "Arrays",
+                sidebar_strings: "Strings",
+                sidebar_builtin: "⚙️ Built-ins",
+                sidebar_len: "len()",
+                sidebar_convert: "to_int() / to_str()",
+                sidebar_io: "🖥️ I/O",
+                sidebar_print: "print",
+                sidebar_input: "input / input_str",
+                doc_title: "SimpLang Documentation",
+                doc_intro: "Welcome! SimpLang is a minimal-syntax, dynamically-typed interpreted language. If you know C, you can master it in half an hour. This guide will take you from zero to all features of SimpLang.",
+                install_title: "📥 Installation",
+                install_desc: "SimpLang offers two ways to run:",
+                install_ide_label: "Graphical IDE",
+                install_ide_text: ": Download <code>SimpleLangIDE.exe</code>, double-click to run, write and execute code.",
+                install_cli_label: "Command-line interpreter",
+                install_cli_text: ": Run the interpreter script with Python (requires Python 3.6+).",
+                install_recommend: "Beginners are recommended to use the IDE, which features syntax highlighting, one-click run, and packaging.",
+                hello_title: "👋 First Program: Hello, World",
+                hello_desc: "Open the IDE, type the following code in the editor, press <code>F5</code> to run:",
+                hello_output: "The output will show <code>Hello, World!</code>. Congratulations, you've run your first SimpLang program!",
+                vars_title: "📌 Variables",
+                vars_desc: "Use <code>var</code> to declare a variable. Names consist of letters, digits, underscore, cannot start with a digit.",
+                vars_assign_desc: "Declared variables can be reassigned:",
+                note_tip: "Tip",
+                vars_note: ": SimpLang is dynamically typed; the type is determined by the value and can change.",
+                types_title: "🔢 Data Types",
+                types_desc: "SimpLang supports the following basic types:",
+                types_table_type: "Type",
+                types_table_example: "Example",
+                types_table_desc: "Description",
+                type_number: "Number",
+                type_number_desc: "Integers and floats unified as numbers",
+                type_string: "String",
+                type_string_desc: "Enclosed in double quotes, supports escapes \\\" and \\n",
+                type_bool: "Boolean",
+                type_bool_desc: "Represented as numbers: 0 false, non-zero true",
+                type_array: "Array",
+                type_array_desc: "Fixed-size one-dimensional array, elements default to 0",
+                operators_title: "➕ Operators",
+                operators_desc: "SimpLang supports common arithmetic, comparison, and logical operators.",
+                operators_arith: "Arithmetic Operators",
+                op: "Operator",
+                meaning: "Meaning",
+                example: "Example",
+                op_add: "Addition / String concatenation",
+                op_sub: "Subtraction",
+                op_mul: "Multiplication",
+                op_div: "Division",
+                op_mod: "Modulo",
+                operators_compare: "Comparison Operators",
+                eq: "Equal",
+                ne: "Not equal",
+                lt: "Less than",
+                gt: "Greater than",
+                le: "Less than or equal",
+                ge: "Greater than or equal",
+                operators_logic: "Logical Operators",
+                and: "Logical AND",
+                or: "Logical OR",
+                not: "Logical NOT",
+                comments_title: "💬 Comments",
+                comments_desc: "Use <code>//</code> for single-line comments, <code>/* ... */</code> for multi-line comments.",
+                if_title: "🚦 if-else Statement",
+                if_note: "Conditions must be enclosed in parentheses <code>( )</code>, and the body in braces <code>{ }</code>.",
+                while_title: "🔄 while Loop",
+                func_title: "🧩 Functions",
+                func_desc: "Define functions with <code>func</code>. Functions can take multiple parameters and support recursion.",
+                return_title: "Return Values",
+                return_desc: "Use <code>return</code> to return a value. If omitted, the function returns 0.",
+                recursion_title: "Recursion",
+                recursion_desc: "Functions can call themselves directly or indirectly. Example: factorial",
+                arrays_title: "🗂️ Arrays",
+                arrays_desc: "Array declaration requires a fixed size:",
+                arrays_access: "Accessing array elements:",
+                warning: "Warning",
+                arrays_note: ": Array indices start at 0; out-of-bounds access causes a runtime error.",
+                strings_title: "📝 Strings",
+                strings_desc: "Strings can be concatenated with <code>+</code>:",
+                strings_escape: "Strings can contain escape sequences:",
+                builtin_title: "⚙️ Built-in Functions",
+                len_desc: "Returns the length of a string.",
+                convert_desc: "Type conversion functions.",
+                io_title: "🖥️ Input & Output",
+                print_desc: "<code>print</code> can output multiple values separated by commas; they are concatenated directly (no automatic spaces).",
+                input_desc: "<code>input</code> reads a number, <code>input_str</code> reads a string. In the IDE, an input dialog will appear.",
+                pack_title: "📦 Packaging to EXE",
+                pack_desc: "In SimpLang IDE, click <strong>Run → Package as EXE...</strong> to compile the current script into a standalone Windows executable. The generated EXE requires no dependencies and can be run directly.",
+                congrats: "🎉 Congratulations! You have completed all the basics of SimpLang. Now open the IDE and start your coding journey!",
+                footer_copyright: "© 2025 SimpLang Team · Open source under MIT",
+                footer_feedback: "Feedback: 137196836@qq.com"
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'A' && (key === 'nav_home' || key === 'nav_docs' || key === 'nav_download' || key === 'nav_blog')) {
+                        el.textContent = translations[lang][key];
+                    } else if (el.tagName === 'BUTTON') {
+                        // skip language buttons themselves
+                    } else if (el.tagName === 'SPAN' && (key === 'install_ide_text' || key === 'install_cli_text' || key === 'vars_note' || key === 'arrays_note')) {
+                        // For spans that contain HTML, we need to set innerHTML carefully
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.innerText = translations[lang][key];
+                    }
+                }
+            });
+            // Update active class on language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const lang = btn.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        setLanguage('zh');
+
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Highlight current section in sidebar
+        const sections = document.querySelectorAll('.content h2, .content h3');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        function changeActiveLink() {
+            let index = sections.length;
+            while (--index && window.scrollY + 100 < sections[index].offsetTop) {}
+            navLinks.forEach((link) => link.classList.remove('active'));
+            if (index >= 0) {
+                const id = sections[index].getAttribute('id');
+                const activeLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+                if (activeLink) activeLink.classList.add('active');
+            }
+        }
+
+        window.addEventListener('scroll', changeActiveLink);
+        window.addEventListener('load', changeActiveLink);
+    </script>
+</body>
+</html>
