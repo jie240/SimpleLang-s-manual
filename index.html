@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimpLang 教学文档 · 一小时速成</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>SimpleLang 完整教程 | 轻量脚本语言</title>
     <style>
         * {
             margin: 0;
@@ -15,840 +12,571 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-            color: #1e1e2f;
-            background: #fafbfc;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background: #eef2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Fira Code', 'SF Mono', monospace, system-ui;
+            color: #1e2f3a;
+            line-height: 1.55;
+            padding: 2rem 1rem;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 32px;
-            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
 
-        /* 导航栏 */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -0.02em;
-            color: #0f172a;
-            text-decoration: none;
-        }
-
-        .logo span {
-            background: #3b82f6;
+        .hero {
+            background: linear-gradient(135deg, #1a3e4c 0%, #235b6e 100%);
+            padding: 2.2rem 2.5rem;
             color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 8px;
+            border-bottom: 1px solid #3e7a8c;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .hero .badge {
+            display: inline-flex;
+            gap: 0.75rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .hero .version {
+            background: #31748f;
+            padding: 0.2rem 0.9rem;
+            border-radius: 32px;
+            font-size: 0.8rem;
             font-weight: 500;
-            align-items: center;
-            flex-wrap: wrap;
+            font-family: monospace;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #334155;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #3b82f6;
-        }
-
-        .lang-switch {
-            background: #f1f5f9;
-            border-radius: 30px;
-            padding: 4px;
-            display: flex;
-            gap: 4px;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            color: #475569;
-        }
-
-        .lang-btn.active {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #3b82f6;
-            color: white;
-            font-weight: 600;
-            padding: 10px 22px;
-            border-radius: 40px;
-            text-decoration: none;
-            transition: background 0.2s;
-            border: none;
-            cursor: pointer;
+        .hero .tagline {
+            margin-top: 1rem;
             font-size: 1rem;
+            opacity: 0.9;
+            border-left: 3px solid #7fc1db;
+            padding-left: 1rem;
         }
 
-        .btn:hover {
-            background: #2563eb;
-        }
-
-        /* 文档布局：侧边栏 + 内容 */
-        .doc-wrapper {
+        .quick-nav {
+            background: #f8fafc;
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid #e0e8ef;
             display: flex;
-            gap: 40px;
-            margin: 40px 0 60px;
+            flex-wrap: wrap;
+            gap: 0.8rem;
         }
 
-        .sidebar {
-            width: 260px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 20px;
-            align-self: flex-start;
-            max-height: calc(100vh - 100px);
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .sidebar h4 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 16px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .sidebar li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar a {
+        .quick-nav a {
             text-decoration: none;
-            color: #334155;
+            background: white;
+            color: #235b6e;
             font-weight: 500;
-            font-size: 0.95rem;
-            display: block;
-            padding: 6px 12px;
-            border-radius: 8px;
-            transition: all 0.15s;
+            padding: 0.3rem 1.1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border: 1px solid #cbdde6;
+            font-family: monospace;
         }
 
-        .sidebar a:hover {
-            background: #eef2ff;
-            color: #3b82f6;
-        }
-
-        .sidebar a.active {
-            background: #3b82f6;
+        .quick-nav a:hover {
+            background: #235b6e;
             color: white;
+            border-color: #235b6e;
         }
 
         .content {
-            flex: 1;
-            min-width: 0;
+            padding: 2rem 2rem 2.5rem;
         }
 
-        .content h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            color: #0f172a;
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #dce5f0;
+            color: #1a4b5c;
         }
 
-        .content h2 {
-            font-size: 2rem;
-            margin-top: 48px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e2e8f0;
-            color: #0f172a;
+        h2:first-of-type {
+            margin-top: 0;
         }
 
-        .content h3 {
-            font-size: 1.5rem;
-            margin-top: 36px;
-            margin-bottom: 16px;
-            color: #1e293b;
+        h3 {
+            font-size: 1.28rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem 0;
+            color: #2b6c82;
         }
 
-        .content p {
-            margin-bottom: 20px;
-            color: #334155;
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1rem 0 0.4rem 0;
+            color: #3a7b94;
         }
 
-        .content code {
-            background: #f1f5f9;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9em;
-            color: #0f172a;
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin: 1.2rem 0;
         }
 
-        .content pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 12px;
+        .card {
+            background: #f9fbfd;
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e2ecf3;
+        }
+
+        .card strong {
+            font-family: monospace;
+            font-size: 1rem;
+            background: #e4eff6;
+            padding: 0.2rem 0.6rem;
+            border-radius: 14px;
+            display: inline-block;
+            margin-bottom: 0.7rem;
+            color: #1e5a77;
+        }
+
+        /* 柔和代码块配色：低对比，舒适 */
+        pre {
+            background: #1e2a32;
+            color: #cddcec;
+            padding: 1rem 1.4rem;
+            border-radius: 18px;
             overflow-x: auto;
-            margin: 24px 0;
-            font-family: 'Menlo', 'Monaco', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            border-left: 4px solid #5f8da0;
+            box-shadow: none;
         }
 
-        .content pre code {
-            background: none;
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #eaf0f5;
+            padding: 0.2rem 0.45rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #2d6a82;
+        }
+
+        pre code {
+            background: transparent;
+            color: #c9ddec;
             padding: 0;
-            color: inherit;
         }
 
-        .content .note {
-            background: #eef2ff;
-            border-left: 4px solid #3b82f6;
-            padding: 16px 20px;
-            border-radius: 8px;
-            margin: 24px 0;
-        }
-
-        .content table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
+            margin: 1.2rem 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
         }
 
-        .content th, .content td {
-            border: 1px solid #e2e8f0;
-            padding: 12px 16px;
+        th, td {
+            border: 1px solid #dde5ed;
+            padding: 0.65rem 1rem;
             text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
         }
 
-        .content th {
-            background: #f8fafc;
+        th {
+            background: #eef3f8;
             font-weight: 600;
+            color: #1c5d79;
         }
 
-        .footer {
-            border-top: 1px solid #e2e8f0;
-            padding: 24px 0;
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            color: #64748b;
-            flex-wrap: wrap;
-            gap: 16px;
+        .note {
+            background: #eef4f9;
+            border-left: 4px solid #5f8da0;
+            padding: 0.8rem 1.2rem;
+            border-radius: 14px;
+            margin: 1rem 0;
+            color: #1d4c5e;
         }
 
-        .footer a {
-            color: #3b82f6;
-            text-decoration: none;
+        .warning {
+            background: #fef3e6;
+            border-left: 4px solid #d9782c;
+            padding: 0.8rem 1.2rem;
+            border-radius: 14px;
+            margin: 1rem 0;
         }
 
-        /* 响应式 */
-        @media (max-width: 900px) {
-            .doc-wrapper {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                position: static;
-                max-height: none;
-                margin-bottom: 20px;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .nav-links {
-                justify-content: space-between;
-            }
+        .footer-note {
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e9f0;
+            color: #6b8598;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 导航 -->
-        <nav class="navbar">
-            <a href="https://jie240.github.io/SimpleLangIDE/" class="logo">
-                SimpLang <span>v1.0</span>
-            </a>
-            <div class="nav-links">
-                <a href="https://jie240.github.io/SimpleLangIDE/" data-key="nav_home">首页</a>
-                <a href="#" style="color:#3b82f6;" data-key="nav_docs">文档</a>
-                <a href="https://jie240.github.io/SimpleLangIDE/#download" data-key="nav_download">下载</a>
-                <a href="https://jie240.github.io/SimpleLangIDE-s-Blog/" target="_blank" data-key="nav_blog">博客</a>
-                <div class="lang-switch">
-                    <button class="lang-btn active" data-lang="zh">中文</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                </div>
-            </div>
-            <div>
-                <a href="https://exe1.webgetstore.com/2026/04/18/8c78ee2e0e076d506ec96fc3c22865ed.exe?sg=9d914afb52d5bcde967ef008d9bf7fcb&e=69e32c79&fileName=SimpleLangIDE%20v1.0.exe&fi=283160994" class="btn" data-key="nav_download_btn">下载 IDE</a>
-            </div>
-        </nav>
+<div class="container">
+    <div class="hero">
+        <h1>SimpleLang 完整教程</h1>
+        <div class="badge">
+            <span class="version">版本 2.0.0</span>
+            <span class="version">轻量脚本 · 渐进式指南</span>
+        </div>
+        <div class="tagline">
+            从零掌握语法、控制流、函数、标准库与实际开发
+        </div>
+    </div>
+    <div class="quick-nav">
+        <a href="#intro">1. 简介与安装</a>
+        <a href="#basics">2. 基础语法</a>
+        <a href="#control">3. 控制流</a>
+        <a href="#functions">4. 函数</a>
+        <a href="#data">5. 数组与字典</a>
+        <a href="#stdlib">6. 标准库详解</a>
+        <a href="#advanced">7. 进阶特性</a>
+        <a href="#examples">8. 实战案例</a>
+    </div>
+    <div class="content">
+        <!-- 1. 简介与安装 -->
+        <h2 id="intro">1. SimpleLang 简介与安装</h2>
+        <p><strong>SimpleLang</strong> 是一门语法简洁、动态类型的脚本语言，内置文件处理、HTTP请求、JSON、正则、SQLite、加密、时间、数组增强等标准库。解释器基于 Python 实现，单一文件即可运行，支持 REPL 交互模式、脚本执行和命令行代码片段。</p>
+        <h3>安装与运行</h3>
+        <p>下载 <code>sl.py</code> 后确保 Python 3.6+ 环境，无需额外依赖。运行方式：</p>
+        <pre><code># 进入 REPL 交互环境
+python sl.py
 
-        <!-- 文档主体 -->
-        <div class="doc-wrapper">
-            <!-- 侧边栏导航 -->
-            <aside class="sidebar">
-                <h4 data-key="sidebar_quickstart">📘 快速开始</h4>
-                <ul>
-                    <li><a href="#installation" data-key="sidebar_install">安装与运行</a></li>
-                    <li><a href="#hello-world" data-key="sidebar_hello">第一个程序</a></li>
-                </ul>
-                <h4 data-key="sidebar_basics">📦 基础语法</h4>
-                <ul>
-                    <li><a href="#variables" data-key="sidebar_vars">变量与赋值</a></li>
-                    <li><a href="#data-types" data-key="sidebar_types">数据类型</a></li>
-                    <li><a href="#operators" data-key="sidebar_ops">运算符</a></li>
-                    <li><a href="#comments" data-key="sidebar_comments">注释</a></li>
-                </ul>
-                <h4 data-key="sidebar_control">🎛️ 控制流</h4>
-                <ul>
-                    <li><a href="#if-else" data-key="sidebar_if">if-else 条件</a></li>
-                    <li><a href="#while" data-key="sidebar_while">while 循环</a></li>
-                </ul>
-                <h4 data-key="sidebar_func">🧩 函数</h4>
-                <ul>
-                    <li><a href="#func-def" data-key="sidebar_func_def">定义与调用</a></li>
-                    <li><a href="#return" data-key="sidebar_return">返回值</a></li>
-                    <li><a href="#recursion" data-key="sidebar_recursion">递归</a></li>
-                </ul>
-                <h4 data-key="sidebar_arrays">🗂️ 数组与字符串</h4>
-                <ul>
-                    <li><a href="#arrays" data-key="sidebar_arrays_def">数组声明与访问</a></li>
-                    <li><a href="#strings" data-key="sidebar_strings">字符串操作</a></li>
-                </ul>
-                <h4 data-key="sidebar_builtin">⚙️ 内置函数</h4>
-                <ul>
-                    <li><a href="#builtin-len" data-key="sidebar_len">len()</a></li>
-                    <li><a href="#builtin-convert" data-key="sidebar_convert">to_int() / to_str()</a></li>
-                </ul>
-                <h4 data-key="sidebar_io">🖥️ 输入输出</h4>
-                <ul>
-                    <li><a href="#print" data-key="sidebar_print">print</a></li>
-                    <li><a href="#input" data-key="sidebar_input">input / input_str</a></li>
-                </ul>
-            </aside>
+# 执行脚本文件
+python sl.py script.sl
 
-            <!-- 内容区 -->
-            <main class="content">
-                <h1 data-key="doc_title">SimpLang 教学文档</h1>
-                <p data-key="doc_intro">欢迎！SimpLang 是一门语法极简、动态类型的解释型语言。如果你有 C 语言基础，半小时即可掌握。本文档将带你从零开始，逐步掌握 SimpLang 的所有特性。</p>
+# 直接执行代码字符串
+python sl.py -c "print(\"Hello SimpleLang\")"
 
-                <!-- 安装 -->
-                <h2 id="installation" data-key="install_title">📥 安装与运行</h2>
-                <p data-key="install_desc">SimpLang 提供两种运行方式：</p>
-                <ul style="margin-left: 24px; margin-bottom: 20px;">
-                    <li><strong data-key="install_ide_label">图形化 IDE</strong><span data-key="install_ide_text">：下载 <code>SimpleLangIDE.exe</code>，双击运行，即可编写和运行代码。</span></li>
-                    <li><strong data-key="install_cli_label">命令行解释器</strong><span data-key="install_cli_text">：使用 Python 运行解释器脚本（需要 Python 3.6+）。</span></li>
-                </ul>
-                <p data-key="install_recommend">推荐初学者使用 IDE，它内置了语法高亮、一键运行和打包功能。</p>
+# 查看版本
+python sl.py -v</code></pre>
+        <div class="note">说明：在 REPL 中支持多行输入（自动检测花括号平衡），可使用 <code>.exit</code> 退出，<code>.help</code> 查看帮助，<code>.vars</code> 查看变量。</div>
 
-                <h2 id="hello-world" data-key="hello_title">👋 第一个程序：Hello, World</h2>
-                <p data-key="hello_desc">打开 IDE，在编辑区输入以下代码，按 <code>F5</code> 运行：</p>
-                <pre><code>print "Hello, World!";</code></pre>
-                <p data-key="hello_output">输出区将显示 <code>Hello, World!</code>。恭喜你，已经成功运行了第一个 SimpLang 程序！</p>
+        <!-- 2. 基础语法 -->
+        <h2 id="basics">2. 基础语法</h2>
+        <h3>2.1 变量声明与数据类型</h3>
+        <p>使用 <code>var</code> 关键字声明变量，动态类型。支持数字、字符串、布尔、null、数组、字典。</p>
+        <pre><code>var age = 25;               // 整数
+var price = 19.99;          // 浮点数
+var name = "SimpleLang";    // 字符串
+var active = true;          // 布尔
+var data = null;            // 空值</code></pre>
 
-                <!-- 变量 -->
-                <h2 id="variables" data-key="vars_title">📌 变量与赋值</h2>
-                <p data-key="vars_desc">使用 <code>var</code> 关键字声明变量。变量名由字母、数字和下划线组成，不能以数字开头。</p>
-                <pre><code>var age = 25;
-var name = "Alice";
-var flag = true;      // Boolean: 0 is false, non-zero is true
-var x;                // Uninitialized, defaults to 0</code></pre>
-                <p data-key="vars_assign_desc">已声明的变量可以直接赋值：</p>
-                <pre><code>age = 26;
-name = "Bob";</code></pre>
-                <div class="note">
-                    💡 <strong data-key="note_tip">提示</strong><span data-key="vars_note">：SimpLang 是动态类型的，变量的类型由赋值决定，可以随时改变类型。</span>
-                </div>
+        <h3>2.2 运算符</h3>
+        <p>算术：<code>+ - * / %</code>；比较：<code>== != < > <= >=</code>；逻辑：<code>&& || !</code>；赋值复合：<code>+= -= *= /= %=</code>；自增自减：<code>++ --</code>。</p>
+        <pre><code>var x = 10;
+x += 5;      // x = 15
+var isOk = (x > 10) && (name == "SimpleLang");</code></pre>
 
-                <h2 id="data-types" data-key="types_title">🔢 数据类型</h2>
-                <p data-key="types_desc">SimpLang 支持以下基本类型：</p>
-                <table>
-                    <tr><th data-key="types_table_type">类型</th><th data-key="types_table_example">示例</th><th data-key="types_table_desc">说明</th></tr>
-                    <tr><td data-key="type_number">数字</td><td><code>10, 3.14, -5</code></td><td data-key="type_number_desc">整数和浮点数统一为数字类型</td></tr>
-                    <tr><td data-key="type_string">字符串</td><td><code>"hello"</code></td><td data-key="type_string_desc">用双引号包围，支持转义 <code>\"</code> 和 <code>\n</code></td></tr>
-                    <tr><td data-key="type_bool">布尔</td><td><code>true / false</code></td><td data-key="type_bool_desc">用数字表示，条件判断中 0 为假，非0为真</td></tr>
-                    <tr><td data-key="type_array">数组</td><td><code>var arr[10];</code></td><td data-key="type_array_desc">固定大小的一维数组，元素默认为 0</td></tr>
-                </table>
+        <h3>2.3 注释</h3>
+        <pre><code>// 单行注释
+/* 多行
+   注释 */</code></pre>
 
-                <h2 id="operators" data-key="operators_title">➕ 运算符</h2>
-                <p data-key="operators_desc">SimpLang 支持常见的算术、比较和逻辑运算符。</p>
-                <h3 data-key="operators_arith">算术运算符</h3>
-                <table>
-                    <tr><th data-key="op">运算符</th><th data-key="meaning">含义</th><th data-key="example">示例</th></tr>
-                    <tr><td><code>+</code></td><td data-key="op_add">加法 / 字符串连接</td><td><code>3 + 5</code> → 8；<code>"a" + "b"</code> → "ab"</td></tr>
-                    <tr><td><code>-</code></td><td data-key="op_sub">减法</td><td><code>10 - 4</code> → 6</td></tr>
-                    <tr><td><code>*</code></td><td data-key="op_mul">乘法</td><td><code>2 * 3</code> → 6</td></tr>
-                    <tr><td><code>/</code></td><td data-key="op_div">除法</td><td><code>7 / 2</code> → 3.5</td></tr>
-                    <tr><td><code>%</code></td><td data-key="op_mod">取模</td><td><code>7 % 2</code> → 1</td></tr>
-                </table>
-                <h3 data-key="operators_compare">比较运算符</h3>
-                <table>
-                    <tr><td><code>==</code></td><td data-key="eq">等于</td><td><code>!=</code></td><td data-key="ne">不等于</td></tr>
-                    <tr><td><code>&lt;</code></td><td data-key="lt">小于</td><td><code>&gt;</code></td><td data-key="gt">大于</td></tr>
-                    <tr><td><code>&lt;=</code></td><td data-key="le">小于等于</td><td><code>&gt;=</code></td><td data-key="ge">大于等于</td></tr>
-                </table>
-                <h3 data-key="operators_logic">逻辑运算符</h3>
-                <table>
-                    <tr><td><code>&&</code></td><td data-key="and">逻辑与</td><td><code>||</code></td><td data-key="or">逻辑或</td><td><code>!</code></td><td data-key="not">逻辑非</td></tr>
-                </table>
-                <pre><code>var a = 5;
-var b = 10;
-if (a > 0 && b < 20) {
-    print "Both conditions are true";
-}</code></pre>
+        <h3>2.4 输入与输出</h3>
+        <pre><code>print("结果: ", 42);            // 输出
+var userInput = input("请输入: "); // 输入字符串
+input_str num;                   // 读取数字(自动转换)
+input name;                      // 读取字符串</code></pre>
 
-                <h2 id="comments" data-key="comments_title">💬 注释</h2>
-                <p data-key="comments_desc">单行注释使用 <code>//</code>，多行注释使用 <code>/* ... */</code>。</p>
-                <pre><code>// This is a single-line comment
-var x = 10;   // Can also be placed after a statement
-
-/*
-   This is a
-   multi-line comment
-*/</code></pre>
-
-                <h2 id="if-else" data-key="if_title">🚦 if-else 条件语句</h2>
-                <pre><code>var score = 85;
+        <!-- 3. 控制流 -->
+        <h2 id="control">3. 控制流语句</h2>
+        <h3>3.1 条件判断 if-else</h3>
+        <pre><code>var score = 85;
 if (score >= 90) {
-    print "Excellent";
+    print("优秀");
 } else if (score >= 60) {
-    print "Pass";
+    print("及格");
 } else {
-    print "Fail";
+    print("不及格");
 }</code></pre>
-                <p data-key="if_note">条件表达式必须用圆括号 <code>( )</code> 包围，执行体用花括号 <code>{ }</code>。</p>
 
-                <h2 id="while" data-key="while_title">🔄 while 循环</h2>
-                <pre><code>var i = 0;
+        <h3>3.2 循环 while / for / for-in</h3>
+        <pre><code>// while 循环
+var i = 0;
 while (i < 5) {
-    print "i = ", i, "\n";
+    print(i);
     i = i + 1;
-}</code></pre>
-
-                <h2 id="func-def" data-key="func_title">🧩 函数定义与调用</h2>
-                <p data-key="func_desc">使用 <code>func</code> 关键字定义函数。函数可以接受多个参数，并支持递归。</p>
-                <pre><code>func add(a, b) {
-    return a + b;
 }
 
-var result = add(3, 5);
-print result;   // Output 8</code></pre>
-                <h3 id="return" data-key="return_title">返回值</h3>
-                <p data-key="return_desc">使用 <code>return</code> 语句返回值。如果没有 <code>return</code>，函数默认返回 0。</p>
-                <h3 id="recursion" data-key="recursion_title">递归</h3>
-                <p data-key="recursion_desc">函数可以直接或间接调用自身。例如计算阶乘：</p>
-                <pre><code>func factorial(n) {
-    if (n <= 1) { return 1; }
-    return n * factorial(n - 1);
+// 传统 for 循环
+for (var j = 0; j < 3; j = j + 1) {
+    print("for: ", j);
+}
+
+// for-in 遍历数组或字典
+var arr = ["a", "b", "c"];
+for item in arr {
+    print(item);
+}
+
+var dict = {"name": "sl", "type": "lang"};
+for key in dict {
+    print(key, "=>", dict[key]);
 }</code></pre>
 
-                <h2 id="arrays" data-key="arrays_title">🗂️ 数组</h2>
-                <p data-key="arrays_desc">声明数组时需要指定大小：</p>
-                <pre><code>var numbers[5];       // Create array of length 5, elements default to 0
-numbers[0] = 10;
-numbers[1] = 20;</code></pre>
-                <p data-key="arrays_access">访问数组元素：</p>
-                <pre><code>print numbers[0];      // 10
-var idx = 1;
-print numbers[idx];    // 20</code></pre>
-                <div class="note">
-                    ⚠️ <strong data-key="warning">注意</strong><span data-key="arrays_note">：数组索引从 0 开始，访问越界会导致运行时错误。</span>
-                </div>
+        <h3>3.3 break 与 continue</h3>
+        <pre><code>for (var k = 0; k < 10; k = k + 1) {
+    if (k == 3) continue;
+    if (k == 7) break;
+    print(k);
+}</code></pre>
 
-                <h2 id="strings" data-key="strings_title">📝 字符串</h2>
-                <p data-key="strings_desc">字符串可以用 <code>+</code> 进行拼接：</p>
-                <pre><code>var greeting = "Hello, " + "world!";
-print greeting;</code></pre>
-                <p data-key="strings_escape">字符串可以包含转义字符：</p>
-                <pre><code>print "First line\nSecond line";
-print "She said: \"Hello!\"";</code></pre>
+        <!-- 4. 函数 -->
+        <h2 id="functions">4. 函数定义与作用域</h2>
+        <h3>4.1 函数声明与调用</h3>
+        <pre><code>func add(a, b) {
+    return a + b;
+}
+var sum = add(10, 20);
+print(sum);   // 30</code></pre>
 
-                <h2 id="builtin-len" data-key="builtin_title">⚙️ 内置函数</h2>
-                <h3>len(str)</h3>
-                <p data-key="len_desc">返回字符串的长度。</p>
-                <pre><code>var s = "SimpLang";
-print len(s);   // 8</code></pre>
-                <h3 id="builtin-convert">to_int(str) / to_str(num)</h3>
-                <p data-key="convert_desc">类型转换函数。</p>
-                <pre><code>var numStr = "42";
-var num = to_int(numStr);   // 42
-var str = to_str(100);      // "100"</code></pre>
+        <h3>4.2 嵌套函数与闭包</h3>
+        <pre><code>func makeCounter() {
+    var count = 0;
+    func inner() {
+        count = count + 1;
+        return count;
+    }
+    return inner;
+}
+var counter = makeCounter();
+print(counter()); // 1
+print(counter()); // 2</code></pre>
 
-                <h2 id="print" data-key="io_title">🖥️ 输入与输出</h2>
-                <h3>print</h3>
-                <p data-key="print_desc"><code>print</code> 可以输出多个值，用逗号分隔，它们会被直接拼接输出（无自动空格）。</p>
-                <pre><code>print "x = ", x, "\n";</code></pre>
-                <h3 id="input">input 和 input_str</h3>
-                <p data-key="input_desc"><code>input</code> 读取数字，<code>input_str</code> 读取字符串。在 IDE 中会弹出输入对话框。</p>
-                <pre><code>var age;
-print "Please enter age: ";
-input age;
-print "Your age is: ", age;
+        <h3>4.3 返回值与空返回</h3>
+        <p>函数无显式 <code>return</code> 时返回 0；可使用 <code>return expr;</code> 返回值。</p>
 
-var name;
-print "Please enter name: ";
-input_str name;
-print "Hello, ", name;</code></pre>
+        <!-- 5. 数组与字典 -->
+        <h2 id="data">5. 复合数据类型：数组与字典</h2>
+        <h3>5.1 数组操作</h3>
+        <pre><code>var list = [10, 20, 30];
+list[1] = 99;
+print(list[1]);          // 99
+var len = len(list);     // 3
+for item in list {
+    print(item);
+}</code></pre>
 
-                <h2 data-key="pack_title">📦 打包为 EXE</h2>
-                <p data-key="pack_desc">在 SimpLang IDE 中，点击菜单 <strong>运行 → 打包为 EXE...</strong>，即可将当前脚本编译成独立的 Windows 可执行文件。生成的 EXE 无需安装任何依赖，可直接运行。</p>
+        <h3>5.2 字典（对象）</h3>
+        <pre><code>var user = {"id": 1, "name": "slang"};
+user["score"] = 100;
+print(user.name);        // 支持点语法访问字典键
+user.age = 22;           // 赋值新字段
+print(user.age);</code></pre>
 
-                <p style="margin-top: 48px;" data-key="congrats">🎉 恭喜！你已经完成了 SimpLang 的全部基础学习。现在可以打开 IDE，开始你的创作之旅！</p>
-            </main>
+        <h3>5.3 数组预分配</h3>
+        <pre><code>var fixed[5];      // 长度5的数组，初始值为0
+fixed[0] = 100;</code></pre>
+
+        <!-- 6. 标准库详解 -->
+        <h2 id="stdlib">6. 标准库函数参考</h2>
+        <p>SimpleLang 将标准库函数直接注册为全局可用，涵盖以下模块：</p>
+
+        <h3>6.1 文件系统</h3>
+        <pre><code>file_write("test.txt", "content");
+var text = file_read("test.txt");
+file_append("log.txt", "新行");
+file_exists("data.json");      // true/false
+file_delete("temp.bin");
+var files = file_list_dir(".");
+file_mkdir("backup");</code></pre>
+
+        <h3>6.2 HTTP 请求与 JSON</h3>
+        <pre><code>var resp = http_get("https://api.github.com/zen");
+print(resp.status, resp.body);
+var postRes = http_post("https://httpbin.org/post", "key=value");
+var obj = json_parse('{"lang":"sl"}');
+var jsonStr = json_stringify({"ok": true});</code></pre>
+
+        <h3>6.3 正则表达式</h3>
+        <pre><code>var matches = regex_match("\\d+", "order 12345");
+var replaced = regex_replace("\\s+", "-", "hello world");
+var found = regex_test("^[A-Z]", "Simple");  // true</code></pre>
+
+        <h3>6.4 SQLite 数据库</h3>
+        <pre><code>var conn = db_open("mydb.db");
+db_execute(conn, "CREATE TABLE IF NOT EXISTS users(id int, name text)");
+db_execute(conn, "INSERT INTO users VALUES(1, 'slang')");
+var rows = db_query(conn, "SELECT * FROM users");
+db_close(conn);</code></pre>
+
+        <h3>6.5 哈希与编码</h3>
+        <pre><code>var md5 = hash_md5("hello");
+var sha256 = hash_sha256("data");
+var b64 = base64_encode("SimpleLang");
+var decoded = base64_decode(b64);</code></pre>
+
+        <h3>6.6 数学函数</h3>
+        <pre><code>math_abs(-5); math_sqrt(16); math_pow(2,8);
+math_random(); math_random_int(1,100);
+math_floor(3.9); math_ceil(3.1);</code></pre>
+
+        <h3>6.7 时间与延时</h3>
+        <pre><code>var ts = time_now();
+var fmt = time_format(ts, "%Y-%m-%d %H:%M:%S");
+time_sleep(0.5);</code></pre>
+
+        <h3>6.8 数组增强函数</h3>
+        <pre><code>var arr = [3,1,2];
+array_push(arr, 4);
+array_sort(arr);
+array_reverse(arr);
+var idx = array_index_of(arr, 2);
+var slice = array_slice(arr, 1, 3);
+array_length(arr);</code></pre>
+
+        <h3>6.9 字典辅助</h3>
+        <pre><code>dict_keys({"a":1}); dict_values({"b":2});
+dict_has({"x":5}, "x"); dict_remove({"a":1},"a");</code></pre>
+
+        <h3>6.10 字符串处理</h3>
+        <pre><code>str_upper("abc"); str_lower("ABC");
+str_contains("hello", "ell");  // true
+str_split("a,b,c", ",");        // 数组
+str_join("-", [1,2,3]);         // "1-2-3"
+str_substring("language", 2, 4);</code></pre>
+
+        <h3>6.11 内置快捷函数</h3>
+        <table>
+            <thead><tr><th>函数</th><th>说明</th><th>示例</th></tr></thead>
+            <tbody>
+                <tr><td><code>len(obj)</code></td><td>长度</td><td><code>len([1,2])</code> → 2</td></tr>
+                <tr><td><code>range(stop)</code> / <code>range(start,stop)</code></td><td>生成整数数组</td><td><code>range(2,5)</code> → [2,3,4]</td></tr>
+                <tr><td><code>to_int(x)</code> / <code>to_float(x)</code></td><td>类型转换</td><td><code>to_int("3.14")</code> → 3</td></tr>
+                <tr><td><code>to_str(x)</code> / <code>to_bool(x)</code></td><td>转字符串/布尔</td><td><code>to_bool("true")</code> → true</td></tr>
+                <tr><td><code>type_of(v)</code></td><td>类型名</td><td><code>type_of([])</code> → "array"</td></tr>
+            </tbody>
+        </table>
+
+        <!-- 7. 进阶特性 -->
+        <h2 id="advanced">7. 进阶特性与最佳实践</h2>
+        <h3>7.1 异常处理 try-catch</h3>
+        <pre><code>try {
+    var res = 10 / 0;
+} catch (err) {
+    print("发生错误: ", err);
+}</code></pre>
+
+        <h3>7.2 导入 Python 模块</h3>
+        <pre><code>import "math";          // 导入 Python math 模块
+var pi = math.pi;
+print(pi);</code></pre>
+        <div class="note">注意：通过 import 语句可以加载任意 Python 标准库或已安装模块，扩展性极强。</div>
+
+        <h3>7.3 作用域规则</h3>
+        <p>SimpleLang 采用词法作用域，函数内部可以访问外部变量。使用 <code>var</code> 声明变量时会在当前作用域创建变量。支持块级作用域（函数/循环内独立作用域）。</p>
+        <pre><code>var global = 100;
+func test() {
+    var inside = 200;
+    print(global);  // 可以访问外部
+}
+test();</code></pre>
+
+        <h3>7.4 链式访问与方法调用</h3>
+        <p>支持对象.成员 以及 对象.方法() 语法，对于字典可以直接调用存储的函数。</p>
+        <pre><code>var obj = {"greet": func() { print("hello"); }};
+obj.greet();   // 调用字典中的函数</code></pre>
+
+        <!-- 8. 实战案例 -->
+        <h2 id="examples">8. 完整实战案例</h2>
+        <h3>案例1: 待办事项管理器 (文件存储)</h3>
+        <pre><code>var filename = "todos.json";
+func load_todos() {
+    if (file_exists(filename)) {
+        var data = file_read(filename);
+        return json_parse(data);
+    }
+    return [];
+}
+func save_todos(todos) {
+    var json = json_stringify(todos);
+    file_write(filename, json);
+}
+func add_todo(task) {
+    var todos = load_todos();
+    array_push(todos, task);
+    save_todos(todos);
+    print("已添加: ", task);
+}
+func list_todos() {
+    var todos = load_todos();
+    for (var i = 0; i < len(todos); i = i + 1) {
+        print(i, ". ", todos[i]);
+    }
+}
+// 演示
+add_todo("学习 SimpleLang");
+add_todo("编写脚本");
+list_todos();</code></pre>
+
+        <h3>案例2: 天气查询工具 (HTTP + JSON)</h3>
+        <pre><code>func get_weather(city) {
+    var url = "https://wttr.in/" + city + "?format=j1";
+    var resp = http_get(url);
+    if (resp.status == 200) {
+        var data = json_parse(resp.body);
+        var temp = data["current_condition"][0]["temp_C"];
+        print(city, "当前温度: ", temp, "°C");
+    } else {
+        print("获取天气失败");
+    }
+}
+get_weather("Beijing");</code></pre>
+
+        <h3>案例3: 简易 Web 爬虫（正则提取链接）</h3>
+        <pre><code>func extract_links(url) {
+    var resp = http_get(url);
+    if (resp.status == 200) {
+        var links = regex_match("href=[\"']([^\"']+)[\"']", resp.body);
+        for link in links {
+            print("链接: ", link);
+        }
+    }
+}
+extract_links("https://example.com");</code></pre>
+
+        <h3>案例4: 数据库操作演示</h3>
+        <pre><code>var conn = db_open("demo.db");
+db_execute(conn, "CREATE TABLE IF NOT EXISTS scores(name TEXT, value INT)");
+db_execute(conn, "INSERT INTO scores VALUES('Alice', 95)");
+db_execute(conn, "INSERT INTO scores VALUES('Bob', 87)");
+var results = db_query(conn, "SELECT * FROM scores WHERE value > 90");
+for row in results {
+    print(row["name"], "=>", row["value"]);
+}
+db_close(conn);</code></pre>
+
+        <div class="warning">
+            <strong>进阶提示：</strong> SimpleLang 的数组和字典操作非常灵活，配合标准库可以高效完成文件批处理、API 聚合、数据清洗等任务。
         </div>
 
-        <!-- 页脚 -->
-        <footer class="footer">
-            <div data-key="footer_copyright">© 2025 SimpLang 团队 · 基于 MIT 协议开源</div>
-            <div>
-                <a href="https://github.com/jie240/SimpleLangIDE" target="_blank">GitHub</a> · 
-                <a data-key="footer_feedback">问题反馈:137196836@qq.com</a>
-            </div>
-        </footer>
+        <div class="note">
+            <strong>总结：</strong> 本教程覆盖了 SimpleLang 从变量、流程控制、函数、复合类型到标准库、异常、导入机制的全部内容，通过实战案例演示了文件、网络、数据库等典型应用。您可以通过 REPL 快速试验，并将脚本用于日常自动化。
+        </div>
+
+        <div class="footer-note">
+            SimpleLang 2.0.0 完整教程 — 轻量脚本，无限可能。 使用 Python 解释器 sl.py 即刻开始开发。
+        </div>
     </div>
-
-    <script>
-        // 多语言文本库
-        const translations = {
-            zh: {
-                nav_home: "首页",
-                nav_docs: "文档",
-                nav_download: "下载",
-                nav_blog: "博客",
-                nav_download_btn: "下载 IDE",
-                sidebar_quickstart: "📘 快速开始",
-                sidebar_install: "安装与运行",
-                sidebar_hello: "第一个程序",
-                sidebar_basics: "📦 基础语法",
-                sidebar_vars: "变量与赋值",
-                sidebar_types: "数据类型",
-                sidebar_ops: "运算符",
-                sidebar_comments: "注释",
-                sidebar_control: "🎛️ 控制流",
-                sidebar_if: "if-else 条件",
-                sidebar_while: "while 循环",
-                sidebar_func: "🧩 函数",
-                sidebar_func_def: "定义与调用",
-                sidebar_return: "返回值",
-                sidebar_recursion: "递归",
-                sidebar_arrays: "🗂️ 数组与字符串",
-                sidebar_arrays_def: "数组声明与访问",
-                sidebar_strings: "字符串操作",
-                sidebar_builtin: "⚙️ 内置函数",
-                sidebar_len: "len()",
-                sidebar_convert: "to_int() / to_str()",
-                sidebar_io: "🖥️ 输入输出",
-                sidebar_print: "print",
-                sidebar_input: "input / input_str",
-                doc_title: "SimpLang 教学文档",
-                doc_intro: "欢迎！SimpLang 是一门语法极简、动态类型的解释型语言。如果你有 C 语言基础，半小时即可掌握。本文档将带你从零开始，逐步掌握 SimpLang 的所有特性。",
-                install_title: "📥 安装与运行",
-                install_desc: "SimpLang 提供两种运行方式：",
-                install_ide_label: "图形化 IDE",
-                install_ide_text: "：下载 <code>SimpleLangIDE.exe</code>，双击运行，即可编写和运行代码。",
-                install_cli_label: "命令行解释器",
-                install_cli_text: "：使用 Python 运行解释器脚本（需要 Python 3.6+）。",
-                install_recommend: "推荐初学者使用 IDE，它内置了语法高亮、一键运行和打包功能。",
-                hello_title: "👋 第一个程序：Hello, World",
-                hello_desc: "打开 IDE，在编辑区输入以下代码，按 <code>F5</code> 运行：",
-                hello_output: "输出区将显示 <code>Hello, World!</code>。恭喜你，已经成功运行了第一个 SimpLang 程序！",
-                vars_title: "📌 变量与赋值",
-                vars_desc: "使用 <code>var</code> 关键字声明变量。变量名由字母、数字和下划线组成，不能以数字开头。",
-                vars_assign_desc: "已声明的变量可以直接赋值：",
-                note_tip: "提示",
-                vars_note: "：SimpLang 是动态类型的，变量的类型由赋值决定，可以随时改变类型。",
-                types_title: "🔢 数据类型",
-                types_desc: "SimpLang 支持以下基本类型：",
-                types_table_type: "类型",
-                types_table_example: "示例",
-                types_table_desc: "说明",
-                type_number: "数字",
-                type_number_desc: "整数和浮点数统一为数字类型",
-                type_string: "字符串",
-                type_string_desc: "用双引号包围，支持转义 \\\" 和 \\n",
-                type_bool: "布尔",
-                type_bool_desc: "用数字表示，条件判断中 0 为假，非0为真",
-                type_array: "数组",
-                type_array_desc: "固定大小的一维数组，元素默认为 0",
-                operators_title: "➕ 运算符",
-                operators_desc: "SimpLang 支持常见的算术、比较和逻辑运算符。",
-                operators_arith: "算术运算符",
-                op: "运算符",
-                meaning: "含义",
-                example: "示例",
-                op_add: "加法 / 字符串连接",
-                op_sub: "减法",
-                op_mul: "乘法",
-                op_div: "除法",
-                op_mod: "取模",
-                operators_compare: "比较运算符",
-                eq: "等于",
-                ne: "不等于",
-                lt: "小于",
-                gt: "大于",
-                le: "小于等于",
-                ge: "大于等于",
-                operators_logic: "逻辑运算符",
-                and: "逻辑与",
-                or: "逻辑或",
-                not: "逻辑非",
-                comments_title: "💬 注释",
-                comments_desc: "单行注释使用 <code>//</code>，多行注释使用 <code>/* ... */</code>。",
-                if_title: "🚦 if-else 条件语句",
-                if_note: "条件表达式必须用圆括号 <code>( )</code> 包围，执行体用花括号 <code>{ }</code>。",
-                while_title: "🔄 while 循环",
-                func_title: "🧩 函数定义与调用",
-                func_desc: "使用 <code>func</code> 关键字定义函数。函数可以接受多个参数，并支持递归。",
-                return_title: "返回值",
-                return_desc: "使用 <code>return</code> 语句返回值。如果没有 <code>return</code>，函数默认返回 0。",
-                recursion_title: "递归",
-                recursion_desc: "函数可以直接或间接调用自身。例如计算阶乘：",
-                arrays_title: "🗂️ 数组",
-                arrays_desc: "声明数组时需要指定大小：",
-                arrays_access: "访问数组元素：",
-                warning: "注意",
-                arrays_note: "：数组索引从 0 开始，访问越界会导致运行时错误。",
-                strings_title: "📝 字符串",
-                strings_desc: "字符串可以用 <code>+</code> 进行拼接：",
-                strings_escape: "字符串可以包含转义字符：",
-                builtin_title: "⚙️ 内置函数",
-                len_desc: "返回字符串的长度。",
-                convert_desc: "类型转换函数。",
-                io_title: "🖥️ 输入与输出",
-                print_desc: "<code>print</code> 可以输出多个值，用逗号分隔，它们会被直接拼接输出（无自动空格）。",
-                input_desc: "<code>input</code> 读取数字，<code>input_str</code> 读取字符串。在 IDE 中会弹出输入对话框。",
-                pack_title: "📦 打包为 EXE",
-                pack_desc: "在 SimpLang IDE 中，点击菜单 <strong>运行 → 打包为 EXE...</strong>，即可将当前脚本编译成独立的 Windows 可执行文件。生成的 EXE 无需安装任何依赖，可直接运行。",
-                congrats: "🎉 恭喜！你已经完成了 SimpLang 的全部基础学习。现在可以打开 IDE，开始你的创作之旅！",
-                footer_copyright: "© 2025 SimpLang 团队 · 基于 MIT 协议开源",
-                footer_feedback: "问题反馈:137196836@qq.com"
-            },
-            en: {
-                nav_home: "Home",
-                nav_docs: "Docs",
-                nav_download: "Download",
-                nav_blog: "Blog",
-                nav_download_btn: "Download IDE",
-                sidebar_quickstart: "📘 Quick Start",
-                sidebar_install: "Installation",
-                sidebar_hello: "First Program",
-                sidebar_basics: "📦 Basics",
-                sidebar_vars: "Variables",
-                sidebar_types: "Data Types",
-                sidebar_ops: "Operators",
-                sidebar_comments: "Comments",
-                sidebar_control: "🎛️ Control Flow",
-                sidebar_if: "if-else",
-                sidebar_while: "while Loop",
-                sidebar_func: "🧩 Functions",
-                sidebar_func_def: "Definition & Call",
-                sidebar_return: "Return Values",
-                sidebar_recursion: "Recursion",
-                sidebar_arrays: "🗂️ Arrays & Strings",
-                sidebar_arrays_def: "Arrays",
-                sidebar_strings: "Strings",
-                sidebar_builtin: "⚙️ Built-ins",
-                sidebar_len: "len()",
-                sidebar_convert: "to_int() / to_str()",
-                sidebar_io: "🖥️ I/O",
-                sidebar_print: "print",
-                sidebar_input: "input / input_str",
-                doc_title: "SimpLang Documentation",
-                doc_intro: "Welcome! SimpLang is a minimal-syntax, dynamically-typed interpreted language. If you know C, you can master it in half an hour. This guide will take you from zero to all features of SimpLang.",
-                install_title: "📥 Installation",
-                install_desc: "SimpLang offers two ways to run:",
-                install_ide_label: "Graphical IDE",
-                install_ide_text: ": Download <code>SimpleLangIDE.exe</code>, double-click to run, write and execute code.",
-                install_cli_label: "Command-line interpreter",
-                install_cli_text: ": Run the interpreter script with Python (requires Python 3.6+).",
-                install_recommend: "Beginners are recommended to use the IDE, which features syntax highlighting, one-click run, and packaging.",
-                hello_title: "👋 First Program: Hello, World",
-                hello_desc: "Open the IDE, type the following code in the editor, press <code>F5</code> to run:",
-                hello_output: "The output will show <code>Hello, World!</code>. Congratulations, you've run your first SimpLang program!",
-                vars_title: "📌 Variables",
-                vars_desc: "Use <code>var</code> to declare a variable. Names consist of letters, digits, underscore, cannot start with a digit.",
-                vars_assign_desc: "Declared variables can be reassigned:",
-                note_tip: "Tip",
-                vars_note: ": SimpLang is dynamically typed; the type is determined by the value and can change.",
-                types_title: "🔢 Data Types",
-                types_desc: "SimpLang supports the following basic types:",
-                types_table_type: "Type",
-                types_table_example: "Example",
-                types_table_desc: "Description",
-                type_number: "Number",
-                type_number_desc: "Integers and floats unified as numbers",
-                type_string: "String",
-                type_string_desc: "Enclosed in double quotes, supports escapes \\\" and \\n",
-                type_bool: "Boolean",
-                type_bool_desc: "Represented as numbers: 0 false, non-zero true",
-                type_array: "Array",
-                type_array_desc: "Fixed-size one-dimensional array, elements default to 0",
-                operators_title: "➕ Operators",
-                operators_desc: "SimpLang supports common arithmetic, comparison, and logical operators.",
-                operators_arith: "Arithmetic Operators",
-                op: "Operator",
-                meaning: "Meaning",
-                example: "Example",
-                op_add: "Addition / String concatenation",
-                op_sub: "Subtraction",
-                op_mul: "Multiplication",
-                op_div: "Division",
-                op_mod: "Modulo",
-                operators_compare: "Comparison Operators",
-                eq: "Equal",
-                ne: "Not equal",
-                lt: "Less than",
-                gt: "Greater than",
-                le: "Less than or equal",
-                ge: "Greater than or equal",
-                operators_logic: "Logical Operators",
-                and: "Logical AND",
-                or: "Logical OR",
-                not: "Logical NOT",
-                comments_title: "💬 Comments",
-                comments_desc: "Use <code>//</code> for single-line comments, <code>/* ... */</code> for multi-line comments.",
-                if_title: "🚦 if-else Statement",
-                if_note: "Conditions must be enclosed in parentheses <code>( )</code>, and the body in braces <code>{ }</code>.",
-                while_title: "🔄 while Loop",
-                func_title: "🧩 Functions",
-                func_desc: "Define functions with <code>func</code>. Functions can take multiple parameters and support recursion.",
-                return_title: "Return Values",
-                return_desc: "Use <code>return</code> to return a value. If omitted, the function returns 0.",
-                recursion_title: "Recursion",
-                recursion_desc: "Functions can call themselves directly or indirectly. Example: factorial",
-                arrays_title: "🗂️ Arrays",
-                arrays_desc: "Array declaration requires a fixed size:",
-                arrays_access: "Accessing array elements:",
-                warning: "Warning",
-                arrays_note: ": Array indices start at 0; out-of-bounds access causes a runtime error.",
-                strings_title: "📝 Strings",
-                strings_desc: "Strings can be concatenated with <code>+</code>:",
-                strings_escape: "Strings can contain escape sequences:",
-                builtin_title: "⚙️ Built-in Functions",
-                len_desc: "Returns the length of a string.",
-                convert_desc: "Type conversion functions.",
-                io_title: "🖥️ Input & Output",
-                print_desc: "<code>print</code> can output multiple values separated by commas; they are concatenated directly (no automatic spaces).",
-                input_desc: "<code>input</code> reads a number, <code>input_str</code> reads a string. In the IDE, an input dialog will appear.",
-                pack_title: "📦 Packaging to EXE",
-                pack_desc: "In SimpLang IDE, click <strong>Run → Package as EXE...</strong> to compile the current script into a standalone Windows executable. The generated EXE requires no dependencies and can be run directly.",
-                congrats: "🎉 Congratulations! You have completed all the basics of SimpLang. Now open the IDE and start your coding journey!",
-                footer_copyright: "© 2025 SimpLang Team · Open source under MIT",
-                footer_feedback: "Feedback: 137196836@qq.com"
-            }
-        };
-
-        let currentLang = 'zh';
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (translations[lang][key]) {
-                    if (el.tagName === 'A' && (key === 'nav_home' || key === 'nav_docs' || key === 'nav_download' || key === 'nav_blog')) {
-                        el.textContent = translations[lang][key];
-                    } else if (el.tagName === 'BUTTON') {
-                        // skip language buttons themselves
-                    } else if (el.tagName === 'SPAN' && (key === 'install_ide_text' || key === 'install_cli_text' || key === 'vars_note' || key === 'arrays_note')) {
-                        // For spans that contain HTML, we need to set innerHTML carefully
-                        el.innerHTML = translations[lang][key];
-                    } else {
-                        el.innerText = translations[lang][key];
-                    }
-                }
-            });
-            // Update active class on language buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('data-lang') === lang) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-        }
-
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const lang = btn.getAttribute('data-lang');
-                setLanguage(lang);
-            });
-        });
-
-        setLanguage('zh');
-
-        // Smooth scroll for sidebar links
-        document.querySelectorAll('.sidebar a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            });
-        });
-
-        // Highlight current section in sidebar
-        const sections = document.querySelectorAll('.content h2, .content h3');
-        const navLinks = document.querySelectorAll('.sidebar a');
-
-        function changeActiveLink() {
-            let index = sections.length;
-            while (--index && window.scrollY + 100 < sections[index].offsetTop) {}
-            navLinks.forEach((link) => link.classList.remove('active'));
-            if (index >= 0) {
-                const id = sections[index].getAttribute('id');
-                const activeLink = document.querySelector(`.sidebar a[href="#${id}"]`);
-                if (activeLink) activeLink.classList.add('active');
-            }
-        }
-
-        window.addEventListener('scroll', changeActiveLink);
-        window.addEventListener('load', changeActiveLink);
-    </script>
+</div>
 </body>
 </html>
