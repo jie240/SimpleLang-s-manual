@@ -1,13 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimpLang - 一小时速成的简易编程语言</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>SimpleLang 完整教程 | 轻量脚本语言</title>
     <style>
         * {
             margin: 0;
@@ -16,589 +12,571 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #1e1e2f;
-            background: #fafbfc;
+            background: #eef2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Fira Code', 'SF Mono', monospace, system-ui;
+            color: #1e2f3a;
+            line-height: 1.55;
+            padding: 2rem 1rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -0.02em;
-            color: #0f172a;
-        }
-
-        .logo span {
-            background: #3b82f6;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 8px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            font-weight: 500;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #334155;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #3b82f6;
-        }
-
-        .lang-switch {
-            background: #f1f5f9;
-            border-radius: 30px;
-            padding: 4px;
-            display: flex;
-            gap: 4px;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            color: #475569;
-        }
-
-        .lang-btn.active {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #3b82f6;
-            color: white;
-            font-weight: 600;
-            padding: 10px 22px;
-            border-radius: 40px;
-            text-decoration: none;
-            transition: background 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background: #2563eb;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #3b82f6;
-            border: 1.5px solid #3b82f6;
-        }
-
-        .btn-outline:hover {
-            background: #3b82f6;
-            color: white;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
 
         .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 0 40px;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .hero-content {
-            flex: 1;
-            min-width: 280px;
+            background: linear-gradient(135deg, #1a3e4c 0%, #235b6e 100%);
+            padding: 2.2rem 2.5rem;
+            color: white;
+            border-bottom: 1px solid #3e7a8c;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
-            color: #0f172a;
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
         }
 
-        .hero .highlight {
-            color: #3b82f6;
-            border-bottom: 3px solid #bfdbfe;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #475569;
-            margin-bottom: 32px;
-            max-width: 550px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
+        .hero .badge {
+            display: inline-flex;
+            gap: 0.75rem;
+            margin-top: 0.8rem;
             flex-wrap: wrap;
         }
 
-        .hero-code {
-            flex: 1;
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
-            overflow-x: auto;
+        .hero .version {
+            background: #31748f;
+            padding: 0.2rem 0.9rem;
+            border-radius: 32px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: monospace;
         }
 
-        .hero-code pre {
-            margin: 0;
-            color: #e2e8f0;
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            font-size: 0.95rem;
-            line-height: 1.5;
+        .hero .tagline {
+            margin-top: 1rem;
+            font-size: 1rem;
+            opacity: 0.9;
+            border-left: 3px solid #7fc1db;
+            padding-left: 1rem;
         }
 
-        .hero-code .keyword { color: #c084fc; }
-        .hero-code .func { color: #6ee7b7; }
-        .hero-code .string { color: #fbbf24; }
-        .hero-code .comment { color: #94a3b8; }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 48px;
-            color: #0f172a;
+        .quick-nav {
+            background: #f8fafc;
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid #e0e8ef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
         }
 
-        .features-grid {
+        .quick-nav a {
+            text-decoration: none;
+            background: white;
+            color: #235b6e;
+            font-weight: 500;
+            padding: 0.3rem 1.1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border: 1px solid #cbdde6;
+            font-family: monospace;
+        }
+
+        .quick-nav a:hover {
+            background: #235b6e;
+            color: white;
+            border-color: #235b6e;
+        }
+
+        .content {
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #dce5f0;
+            color: #1a4b5c;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.28rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem 0;
+            color: #2b6c82;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1rem 0 0.4rem 0;
+            color: #3a7b94;
+        }
+
+        .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
+            gap: 1.25rem;
+            margin: 1.2rem 0;
         }
 
-        .feature-card {
-            background: white;
-            padding: 28px 24px;
+        .card {
+            background: #f9fbfd;
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 1px solid #eef2f6;
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e2ecf3;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
+        .card strong {
+            font-family: monospace;
+            font-size: 1rem;
+            background: #e4eff6;
+            padding: 0.2rem 0.6rem;
+            border-radius: 14px;
+            display: inline-block;
+            margin-bottom: 0.7rem;
+            color: #1e5a77;
         }
 
-        .feature-icon {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            color: #0f172a;
-        }
-
-        .feature-card p {
-            color: #475569;
-        }
-
-        .code-showcase {
-            background: #0f172a;
-            border-radius: 24px;
-            padding: 40px;
-            margin: 60px 0;
-            color: #e2e8f0;
+        /* 柔和代码块配色：低对比，舒适 */
+        pre {
+            background: #1e2a32;
+            color: #cddcec;
+            padding: 1rem 1.4rem;
+            border-radius: 18px;
             overflow-x: auto;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            border-left: 4px solid #5f8da0;
+            box-shadow: none;
         }
 
-        .code-showcase h2 {
-            color: white;
-            margin-bottom: 24px;
-            font-size: 2rem;
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #eaf0f5;
+            padding: 0.2rem 0.45rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #2d6a82;
         }
 
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            overflow-x: auto;
+        pre code {
+            background: transparent;
+            color: #c9ddec;
+            padding: 0;
         }
 
-        .code-block pre {
-            margin: 0;
-            font-family: 'Menlo', monospace;
-            font-size: 0.95rem;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
         }
 
-        .download-section {
+        th, td {
+            border: 1px solid #dde5ed;
+            padding: 0.65rem 1rem;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #eef3f8;
+            font-weight: 600;
+            color: #1c5d79;
+        }
+
+        .note {
+            background: #eef4f9;
+            border-left: 4px solid #5f8da0;
+            padding: 0.8rem 1.2rem;
+            border-radius: 14px;
+            margin: 1rem 0;
+            color: #1d4c5e;
+        }
+
+        .warning {
+            background: #fef3e6;
+            border-left: 4px solid #d9782c;
+            padding: 0.8rem 1.2rem;
+            border-radius: 14px;
+            margin: 1rem 0;
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
             text-align: center;
-            padding: 60px 0;
-            background: linear-gradient(145deg, #f8fafc 0%, #eef2ff 100%);
-            border-radius: 40px;
-            margin: 40px 0;
-        }
-
-        .download-section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 16px;
-        }
-
-        .download-section p {
-            color: #475569;
-            margin-bottom: 32px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .download-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer {
-            border-top: 1px solid #e2e8f0;
-            padding: 30px 0;
-            margin-top: 60px;
-            display: flex;
-            justify-content: space-between;
-            color: #64748b;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                padding: 30px 0;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .nav-links {
-                justify-content: space-between;
-            }
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e9f0;
+            color: #6b8598;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <div class="logo">
-                SimpLang <span>v1.0</span>
-            </div>
-            <div class="nav-links">
-                <a href="#features" data-key="nav_features">特性</a>
-                <a href="#examples" data-key="nav_examples">示例</a>
-                <a href="#download" data-key="nav_download">下载</a>
-                <a href="https://jie240.github.io/SimpleLangIDE-s-manual/" target="_blank" data-key="nav_docs">文档</a>
-                <!-- 新增博客链接 -->
-                <a href="https://jie240.github.io/SimpleLangIDE-s-Blog/" target="_blank" data-key="nav_blog">博客</a>
-                <div class="lang-switch">
-                    <button class="lang-btn active" data-lang="zh">中文</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                </div>
-            </div>
-            <div>
-                <a href="#download" class="btn" data-key="nav_download_btn">免费下载</a>
-            </div>
-        </nav>
-
-        <section class="hero">
-            <div class="hero-content">
-                <h1><span data-key="hero_title1">像 C 一样简单，</span><br><span class="highlight" data-key="hero_title2">一小时速成</span><span data-key="hero_title3">的编程语言</span></h1>
-                <p data-key="hero_desc">SimpLang 保留了 C 的简洁语法，去除了复杂的指针和类型声明。自带 IDE，一键打包 EXE，让编程回归乐趣。</p>
-                <div class="hero-buttons">
-                    <a href="#download" class="btn" data-key="hero_btn1">下载 SimpLang IDE</a>
-                    <a href="#examples" class="btn btn-outline" data-key="hero_btn2">查看示例</a>
-                </div>
-            </div>
-            <div class="hero-code">
-                <pre><code><span class="comment">// 计算斐波那契数列 —— 递归如此简单</span>
-<span class="keyword">func</span> <span class="func">fib</span>(n) {
-    <span class="keyword">if</span> (n &lt;= 1) { <span class="keyword">return</span> n; }
-    <span class="keyword">return</span> fib(n-1) + fib(n-2);
-}
-
-<span class="keyword">var</span> i = 0;
-<span class="keyword">while</span> (i &lt; 10) {
-    <span class="keyword">print</span> <span class="string">"fib("</span>, i, <span class="string">") = "</span>, fib(i), <span class="string">"\n"</span>;
-    i = i + 1;
-}</code></pre>
-            </div>
-        </section>
-
-        <section id="features">
-            <h2 class="section-title" data-key="features_title">为什么选择 SimpLang？</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 data-key="feature1_title">极简语法</h3>
-                    <p data-key="feature1_desc">花括号、分号、熟悉的控制流，但无需类型声明。有 C 基础者 30 分钟上手。</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧩</div>
-                    <h3 data-key="feature2_title">动态类型</h3>
-                    <p data-key="feature2_desc">变量自动推导，支持数字、字符串、数组。专注逻辑，而非内存管理。</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🖥️</div>
-                    <h3 data-key="feature3_title">自带 IDE</h3>
-                    <p data-key="feature3_desc">语法高亮、一键运行、输入对话框，开箱即用的图形化开发环境。</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3 data-key="feature4_title">一键打包 EXE</h3>
-                    <p data-key="feature4_desc">写完代码，直接生成独立的 Windows 可执行文件，分享给任何人运行。</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3 data-key="feature5_title">完整递归支持</h3>
-                    <p data-key="feature5_desc">词法作用域、函数是一等公民，递归、闭包轻松实现。</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3 data-key="feature6_title">开源 & 可扩展</h3>
-                    <p data-key="feature6_desc">解释器由 Python 编写，易于修改和嵌入到你的项目中。</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="examples" class="code-showcase">
-            <h2 data-key="examples_title">✏️ 更多代码示例</h2>
-            <div class="code-block">
-                <pre><code><span class="comment">// 数组与循环</span>
-<span class="keyword">var</span> arr[5];
-<span class="keyword">var</span> i = 0;
-<span class="keyword">while</span> (i &lt; 5) {
-    arr[i] = i * i;
-    i = i + 1;
-}
-<span class="keyword">print</span> <span class="string">"平方数组: "</span>;
-i = 0;
-<span class="keyword">while</span> (i &lt; 5) {
-    <span class="keyword">print</span> arr[i], <span class="string">" "</span>;
-    i = i + 1;
-}
-
-<span class="comment">// 字符串与输入</span>
-<span class="keyword">var</span> name;
-<span class="keyword">print</span> <span class="string">"你叫什么名字？"</span>;
-<span class="keyword">input_str</span> name;
-<span class="keyword">print</span> <span class="string">"你好, "</span>, name, <span class="string">"！"</span>;
-
-<span class="comment">// 内置函数</span>
-<span class="keyword">var</span> numStr = <span class="string">"123"</span>;
-<span class="keyword">var</span> num = to_int(numStr);
-<span class="keyword">print</span> <span class="string">"转换后的数字: "</span>, num;</code></pre>
-            </div>
-        </section>
-
-        <section id="download" class="download-section">
-            <h2 data-key="download_title">🚀 立即开始使用 SimpLang</h2>
-            <p data-key="download_desc">包含完整 IDE 和命令行解释器，支持 Windows / macOS / Linux。一键打包，即刻分享。</p>
-            <div class="download-buttons">
-                <a href="https://exe1.webgetstore.com/2026/04/18/8c78ee2e0e076d506ec96fc3c22865ed.exe?sg=9d914afb52d5bcde967ef008d9bf7fcb&e=69e32c79&fileName=SimpleLangIDE%20v1.0.exe&fi=283160994" class="btn" style="padding: 14px 36px; font-size: 1.1rem;" data-key="download_btn">⬇️ 下载 SimpLang IDE (Windows)</a>
-                <a href="https://jie240.github.io/SimpleLangIDE-s-manual/" target="_blank" class="btn btn-outline" style="padding: 14px 36px; font-size: 1.1rem;" data-key="download_docs_btn">📖 查看文档</a>
-            </div>
-            <p style="margin-top: 24px; font-size: 0.9rem;" data-key="download_note">当前版本 v1.0.0 · 需要 Windows 7 及以上 · 无需安装 Python</p>
-        </section>
-
-        <footer class="footer">
-            <div data-key="footer_copyright">© 2025 SimpLang 团队 · 基于 MIT 协议开源</div>
-            <div>
-                <a href="https://github.com/jie240/SimpleLangIDE" target="_blank">GitHub</a> · 
-                <a>问题反馈:137196836@qq.com</a> 
-            </div>
-        </footer>
+<div class="container">
+    <div class="hero">
+        <h1>SimpleLang 完整教程</h1>
+        <div class="badge">
+            <span class="version">版本 2.0.0</span>
+            <span class="version">轻量脚本 · 渐进式指南</span>
+        </div>
+        <div class="tagline">
+            从零掌握语法、控制流、函数、标准库与实际开发
+        </div>
     </div>
+    <div class="quick-nav">
+        <a href="#intro">1. 简介与安装</a>
+        <a href="#basics">2. 基础语法</a>
+        <a href="#control">3. 控制流</a>
+        <a href="#functions">4. 函数</a>
+        <a href="#data">5. 数组与字典</a>
+        <a href="#stdlib">6. 标准库详解</a>
+        <a href="#advanced">7. 进阶特性</a>
+        <a href="#examples">8. 实战案例</a>
+    </div>
+    <div class="content">
+        <!-- 1. 简介与安装 -->
+        <h2 id="intro">1. SimpleLang 简介与安装</h2>
+        <p><strong>SimpleLang</strong> 是一门语法简洁、动态类型的脚本语言，内置文件处理、HTTP请求、JSON、正则、SQLite、加密、时间、数组增强等标准库。解释器基于 Python 实现，单一文件即可运行，支持 REPL 交互模式、脚本执行和命令行代码片段。</p>
+        <h3>安装与运行</h3>
+        <p>下载 <code>sl.py</code> 后确保 Python 3.6+ 环境，无需额外依赖。运行方式：</p>
+        <pre><code># 进入 REPL 交互环境
+python sl.py
 
-    <script>
-        // 多语言文本库
-        const translations = {
-            zh: {
-                // 导航
-                nav_features: "特性",
-                nav_examples: "示例",
-                nav_download: "下载",
-                nav_docs: "文档",
-                nav_blog: "博客",          // 新增博客翻译
-                nav_download_btn: "免费下载",
-                // Hero
-                hero_title1: "像 C 一样简单，",
-                hero_title2: "一小时速成",
-                hero_title3: "的编程语言",
-                hero_desc: "SimpLang 保留了 C 的简洁语法，去除了复杂的指针和类型声明。自带 IDE，一键打包 EXE，让编程回归乐趣。",
-                hero_btn1: "下载 SimpLang IDE",
-                hero_btn2: "查看示例",
-                // Features
-                features_title: "为什么选择 SimpLang？",
-                feature1_title: "极简语法",
-                feature1_desc: "花括号、分号、熟悉的控制流，但无需类型声明。有 C 基础者 30 分钟上手。",
-                feature2_title: "动态类型",
-                feature2_desc: "变量自动推导，支持数字、字符串、数组。专注逻辑，而非内存管理。",
-                feature3_title: "自带 IDE",
-                feature3_desc: "语法高亮、一键运行、输入对话框，开箱即用的图形化开发环境。",
-                feature4_title: "一键打包 EXE",
-                feature4_desc: "写完代码，直接生成独立的 Windows 可执行文件，分享给任何人运行。",
-                feature5_title: "完整递归支持",
-                feature5_desc: "词法作用域、函数是一等公民，递归、闭包轻松实现。",
-                feature6_title: "开源 & 可扩展",
-                feature6_desc: "解释器由 Python 编写，易于修改和嵌入到你的项目中。",
-                // Examples
-                examples_title: "✏️ 更多代码示例",
-                // Download
-                download_title: "🚀 立即开始使用 SimpLang",
-                download_desc: "包含完整 IDE 和命令行解释器，支持 Windows / macOS / Linux。一键打包，即刻分享。",
-                download_btn: "⬇️ 下载 SimpLang IDE (Windows)",
-                download_docs_btn: "📖 查看文档",
-                download_note: "当前版本 v1.0.0 · 需要 Windows 7 及以上 · 无需安装 Python",
-                // Footer
-                footer_copyright: "© 2025 SimpLang 团队 · 基于 MIT 协议开源",
-                footer_feedback: "问题反馈",
-                footer_contribute: "贡献指南"
-            },
-            en: {
-                nav_features: "Features",
-                nav_examples: "Examples",
-                nav_download: "Download",
-                nav_docs: "Docs",
-                nav_blog: "Blog",          // 新增博客翻译
-                nav_download_btn: "Free Download",
-                hero_title1: "Simple as C, ",
-                hero_title2: "Learn in 1 Hour",
-                hero_title3: "",
-                hero_desc: "SimpLang keeps C's clean syntax, removes complex pointers and type declarations. Built-in IDE, one-click EXE packaging, bringing fun back to programming.",
-                hero_btn1: "Download SimpLang IDE",
-                hero_btn2: "View Examples",
-                features_title: "Why SimpLang?",
-                feature1_title: "Minimal Syntax",
-                feature1_desc: "Curly braces, semicolons, familiar control flow, but no type declarations. 30 minutes if you know C.",
-                feature2_title: "Dynamic Typing",
-                feature2_desc: "Auto type inference, supports numbers, strings, arrays. Focus on logic, not memory management.",
-                feature3_title: "Built-in IDE",
-                feature3_desc: "Syntax highlighting, one-click run, input dialog, graphical dev environment out of the box.",
-                feature4_title: "One-click EXE",
-                feature4_desc: "After writing code, directly generate standalone Windows executable, share with anyone.",
-                feature5_title: "Full Recursion",
-                feature5_desc: "Lexical scoping, functions as first-class citizens, easy recursion and closures.",
-                feature6_title: "Open Source & Extensible",
-                feature6_desc: "Interpreter written in Python, easy to modify and embed in your projects.",
-                examples_title: "✏️ More Code Examples",
-                download_title: "🚀 Get Started with SimpLang",
-                download_desc: "Includes full IDE and command-line interpreter, supports Windows / macOS / Linux. One-click package, share instantly.",
-                download_btn: "⬇️ Download SimpLang IDE (Windows)",
-                download_docs_btn: "📖 Read Docs",
-                download_note: "Current version v1.0.0 · Requires Windows 7 or later · No Python installation needed",
-                footer_copyright: "© 2025 SimpLang Team · Open source under MIT",
-                footer_feedback: "Feedback",
-                footer_contribute: "Contribute"
-            }
-        };
+# 执行脚本文件
+python sl.py script.sl
 
-        let currentLang = 'zh';
+# 直接执行代码字符串
+python sl.py -c "print(\"Hello SimpleLang\")"
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            // 更新所有带 data-key 的元素文本
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (translations[lang][key]) {
-                    // 保留内部可能存在的图标或特殊字符
-                    if (el.tagName === 'A' && (key === 'nav_docs' || key === 'nav_blog')) {
-                        // 特殊处理：保持链接不变，只改文本
-                        el.textContent = translations[lang][key];
-                    } else if (el.tagName === 'BUTTON') {
-                        // 按钮文字
-                        el.textContent = translations[lang][key];
-                    } else {
-                        // 普通元素，但可能需要保留子元素？这里简单处理，但 hero_title 有三个span，需要分别处理
-                        // 对于普通元素直接替换 innerText 会丢失内部结构，但我们的 data-key 都在叶子节点或单独元素上，可行
-                        // 注意 hero 标题是分开的 span，每个都有 data-key，所以没问题
-                        el.innerText = translations[lang][key];
-                    }
-                }
-            });
-            // 更新按钮 active 样式
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('data-lang') === lang) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            // 更新 html lang 属性
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+# 查看版本
+python sl.py -v</code></pre>
+        <div class="note">说明：在 REPL 中支持多行输入（自动检测花括号平衡），可使用 <code>.exit</code> 退出，<code>.help</code> 查看帮助，<code>.vars</code> 查看变量。</div>
+
+        <!-- 2. 基础语法 -->
+        <h2 id="basics">2. 基础语法</h2>
+        <h3>2.1 变量声明与数据类型</h3>
+        <p>使用 <code>var</code> 关键字声明变量，动态类型。支持数字、字符串、布尔、null、数组、字典。</p>
+        <pre><code>var age = 25;               // 整数
+var price = 19.99;          // 浮点数
+var name = "SimpleLang";    // 字符串
+var active = true;          // 布尔
+var data = null;            // 空值</code></pre>
+
+        <h3>2.2 运算符</h3>
+        <p>算术：<code>+ - * / %</code>；比较：<code>== != < > <= >=</code>；逻辑：<code>&& || !</code>；赋值复合：<code>+= -= *= /= %=</code>；自增自减：<code>++ --</code>。</p>
+        <pre><code>var x = 10;
+x += 5;      // x = 15
+var isOk = (x > 10) && (name == "SimpleLang");</code></pre>
+
+        <h3>2.3 注释</h3>
+        <pre><code>// 单行注释
+/* 多行
+   注释 */</code></pre>
+
+        <h3>2.4 输入与输出</h3>
+        <pre><code>print("结果: ", 42);            // 输出
+var userInput = input("请输入: "); // 输入字符串
+input_str num;                   // 读取数字(自动转换)
+input name;                      // 读取字符串</code></pre>
+
+        <!-- 3. 控制流 -->
+        <h2 id="control">3. 控制流语句</h2>
+        <h3>3.1 条件判断 if-else</h3>
+        <pre><code>var score = 85;
+if (score >= 90) {
+    print("优秀");
+} else if (score >= 60) {
+    print("及格");
+} else {
+    print("不及格");
+}</code></pre>
+
+        <h3>3.2 循环 while / for / for-in</h3>
+        <pre><code>// while 循环
+var i = 0;
+while (i < 5) {
+    print(i);
+    i = i + 1;
+}
+
+// 传统 for 循环
+for (var j = 0; j < 3; j = j + 1) {
+    print("for: ", j);
+}
+
+// for-in 遍历数组或字典
+var arr = ["a", "b", "c"];
+for item in arr {
+    print(item);
+}
+
+var dict = {"name": "sl", "type": "lang"};
+for key in dict {
+    print(key, "=>", dict[key]);
+}</code></pre>
+
+        <h3>3.3 break 与 continue</h3>
+        <pre><code>for (var k = 0; k < 10; k = k + 1) {
+    if (k == 3) continue;
+    if (k == 7) break;
+    print(k);
+}</code></pre>
+
+        <!-- 4. 函数 -->
+        <h2 id="functions">4. 函数定义与作用域</h2>
+        <h3>4.1 函数声明与调用</h3>
+        <pre><code>func add(a, b) {
+    return a + b;
+}
+var sum = add(10, 20);
+print(sum);   // 30</code></pre>
+
+        <h3>4.2 嵌套函数与闭包</h3>
+        <pre><code>func makeCounter() {
+    var count = 0;
+    func inner() {
+        count = count + 1;
+        return count;
+    }
+    return inner;
+}
+var counter = makeCounter();
+print(counter()); // 1
+print(counter()); // 2</code></pre>
+
+        <h3>4.3 返回值与空返回</h3>
+        <p>函数无显式 <code>return</code> 时返回 0；可使用 <code>return expr;</code> 返回值。</p>
+
+        <!-- 5. 数组与字典 -->
+        <h2 id="data">5. 复合数据类型：数组与字典</h2>
+        <h3>5.1 数组操作</h3>
+        <pre><code>var list = [10, 20, 30];
+list[1] = 99;
+print(list[1]);          // 99
+var len = len(list);     // 3
+for item in list {
+    print(item);
+}</code></pre>
+
+        <h3>5.2 字典（对象）</h3>
+        <pre><code>var user = {"id": 1, "name": "slang"};
+user["score"] = 100;
+print(user.name);        // 支持点语法访问字典键
+user.age = 22;           // 赋值新字段
+print(user.age);</code></pre>
+
+        <h3>5.3 数组预分配</h3>
+        <pre><code>var fixed[5];      // 长度5的数组，初始值为0
+fixed[0] = 100;</code></pre>
+
+        <!-- 6. 标准库详解 -->
+        <h2 id="stdlib">6. 标准库函数参考</h2>
+        <p>SimpleLang 将标准库函数直接注册为全局可用，涵盖以下模块：</p>
+
+        <h3>6.1 文件系统</h3>
+        <pre><code>file_write("test.txt", "content");
+var text = file_read("test.txt");
+file_append("log.txt", "新行");
+file_exists("data.json");      // true/false
+file_delete("temp.bin");
+var files = file_list_dir(".");
+file_mkdir("backup");</code></pre>
+
+        <h3>6.2 HTTP 请求与 JSON</h3>
+        <pre><code>var resp = http_get("https://api.github.com/zen");
+print(resp.status, resp.body);
+var postRes = http_post("https://httpbin.org/post", "key=value");
+var obj = json_parse('{"lang":"sl"}');
+var jsonStr = json_stringify({"ok": true});</code></pre>
+
+        <h3>6.3 正则表达式</h3>
+        <pre><code>var matches = regex_match("\\d+", "order 12345");
+var replaced = regex_replace("\\s+", "-", "hello world");
+var found = regex_test("^[A-Z]", "Simple");  // true</code></pre>
+
+        <h3>6.4 SQLite 数据库</h3>
+        <pre><code>var conn = db_open("mydb.db");
+db_execute(conn, "CREATE TABLE IF NOT EXISTS users(id int, name text)");
+db_execute(conn, "INSERT INTO users VALUES(1, 'slang')");
+var rows = db_query(conn, "SELECT * FROM users");
+db_close(conn);</code></pre>
+
+        <h3>6.5 哈希与编码</h3>
+        <pre><code>var md5 = hash_md5("hello");
+var sha256 = hash_sha256("data");
+var b64 = base64_encode("SimpleLang");
+var decoded = base64_decode(b64);</code></pre>
+
+        <h3>6.6 数学函数</h3>
+        <pre><code>math_abs(-5); math_sqrt(16); math_pow(2,8);
+math_random(); math_random_int(1,100);
+math_floor(3.9); math_ceil(3.1);</code></pre>
+
+        <h3>6.7 时间与延时</h3>
+        <pre><code>var ts = time_now();
+var fmt = time_format(ts, "%Y-%m-%d %H:%M:%S");
+time_sleep(0.5);</code></pre>
+
+        <h3>6.8 数组增强函数</h3>
+        <pre><code>var arr = [3,1,2];
+array_push(arr, 4);
+array_sort(arr);
+array_reverse(arr);
+var idx = array_index_of(arr, 2);
+var slice = array_slice(arr, 1, 3);
+array_length(arr);</code></pre>
+
+        <h3>6.9 字典辅助</h3>
+        <pre><code>dict_keys({"a":1}); dict_values({"b":2});
+dict_has({"x":5}, "x"); dict_remove({"a":1},"a");</code></pre>
+
+        <h3>6.10 字符串处理</h3>
+        <pre><code>str_upper("abc"); str_lower("ABC");
+str_contains("hello", "ell");  // true
+str_split("a,b,c", ",");        // 数组
+str_join("-", [1,2,3]);         // "1-2-3"
+str_substring("language", 2, 4);</code></pre>
+
+        <h3>6.11 内置快捷函数</h3>
+        <table>
+            <thead><tr><th>函数</th><th>说明</th><th>示例</th></tr></thead>
+            <tbody>
+                <tr><td><code>len(obj)</code></td><td>长度</td><td><code>len([1,2])</code> → 2</td></tr>
+                <tr><td><code>range(stop)</code> / <code>range(start,stop)</code></td><td>生成整数数组</td><td><code>range(2,5)</code> → [2,3,4]</td></tr>
+                <tr><td><code>to_int(x)</code> / <code>to_float(x)</code></td><td>类型转换</td><td><code>to_int("3.14")</code> → 3</td></tr>
+                <tr><td><code>to_str(x)</code> / <code>to_bool(x)</code></td><td>转字符串/布尔</td><td><code>to_bool("true")</code> → true</td></tr>
+                <tr><td><code>type_of(v)</code></td><td>类型名</td><td><code>type_of([])</code> → "array"</td></tr>
+            </tbody>
+        </table>
+
+        <!-- 7. 进阶特性 -->
+        <h2 id="advanced">7. 进阶特性与最佳实践</h2>
+        <h3>7.1 异常处理 try-catch</h3>
+        <pre><code>try {
+    var res = 10 / 0;
+} catch (err) {
+    print("发生错误: ", err);
+}</code></pre>
+
+        <h3>7.2 导入 Python 模块</h3>
+        <pre><code>import "math";          // 导入 Python math 模块
+var pi = math.pi;
+print(pi);</code></pre>
+        <div class="note">注意：通过 import 语句可以加载任意 Python 标准库或已安装模块，扩展性极强。</div>
+
+        <h3>7.3 作用域规则</h3>
+        <p>SimpleLang 采用词法作用域，函数内部可以访问外部变量。使用 <code>var</code> 声明变量时会在当前作用域创建变量。支持块级作用域（函数/循环内独立作用域）。</p>
+        <pre><code>var global = 100;
+func test() {
+    var inside = 200;
+    print(global);  // 可以访问外部
+}
+test();</code></pre>
+
+        <h3>7.4 链式访问与方法调用</h3>
+        <p>支持对象.成员 以及 对象.方法() 语法，对于字典可以直接调用存储的函数。</p>
+        <pre><code>var obj = {"greet": func() { print("hello"); }};
+obj.greet();   // 调用字典中的函数</code></pre>
+
+        <!-- 8. 实战案例 -->
+        <h2 id="examples">8. 完整实战案例</h2>
+        <h3>案例1: 待办事项管理器 (文件存储)</h3>
+        <pre><code>var filename = "todos.json";
+func load_todos() {
+    if (file_exists(filename)) {
+        var data = file_read(filename);
+        return json_parse(data);
+    }
+    return [];
+}
+func save_todos(todos) {
+    var json = json_stringify(todos);
+    file_write(filename, json);
+}
+func add_todo(task) {
+    var todos = load_todos();
+    array_push(todos, task);
+    save_todos(todos);
+    print("已添加: ", task);
+}
+func list_todos() {
+    var todos = load_todos();
+    for (var i = 0; i < len(todos); i = i + 1) {
+        print(i, ". ", todos[i]);
+    }
+}
+// 演示
+add_todo("学习 SimpleLang");
+add_todo("编写脚本");
+list_todos();</code></pre>
+
+        <h3>案例2: 天气查询工具 (HTTP + JSON)</h3>
+        <pre><code>func get_weather(city) {
+    var url = "https://wttr.in/" + city + "?format=j1";
+    var resp = http_get(url);
+    if (resp.status == 200) {
+        var data = json_parse(resp.body);
+        var temp = data["current_condition"][0]["temp_C"];
+        print(city, "当前温度: ", temp, "°C");
+    } else {
+        print("获取天气失败");
+    }
+}
+get_weather("Beijing");</code></pre>
+
+        <h3>案例3: 简易 Web 爬虫（正则提取链接）</h3>
+        <pre><code>func extract_links(url) {
+    var resp = http_get(url);
+    if (resp.status == 200) {
+        var links = regex_match("href=[\"']([^\"']+)[\"']", resp.body);
+        for link in links {
+            print("链接: ", link);
         }
+    }
+}
+extract_links("https://example.com");</code></pre>
 
-        // 绑定语言切换事件
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const lang = btn.getAttribute('data-lang');
-                setLanguage(lang);
-            });
-        });
+        <h3>案例4: 数据库操作演示</h3>
+        <pre><code>var conn = db_open("demo.db");
+db_execute(conn, "CREATE TABLE IF NOT EXISTS scores(name TEXT, value INT)");
+db_execute(conn, "INSERT INTO scores VALUES('Alice', 95)");
+db_execute(conn, "INSERT INTO scores VALUES('Bob', 87)");
+var results = db_query(conn, "SELECT * FROM scores WHERE value > 90");
+for row in results {
+    print(row["name"], "=>", row["value"]);
+}
+db_close(conn);</code></pre>
 
-        // 初始化中文
-        setLanguage('zh');
+        <div class="warning">
+            <strong>进阶提示：</strong> SimpleLang 的数组和字典操作非常灵活，配合标准库可以高效完成文件批处理、API 聚合、数据清洗等任务。
+        </div>
 
-        // 平滑滚动 (修复内部锚点)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href === "#" || href === "") return;
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+        <div class="note">
+            <strong>总结：</strong> 本教程覆盖了 SimpleLang 从变量、流程控制、函数、复合类型到标准库、异常、导入机制的全部内容，通过实战案例演示了文件、网络、数据库等典型应用。您可以通过 REPL 快速试验，并将脚本用于日常自动化。
+        </div>
+
+        <div class="footer-note">
+            SimpleLang 1.0.0 完整教程 — 轻量脚本，无限可能。 使用 Python 解释器 sl.py 即刻开始开发。
+        </div>
+    </div>
+</div>
 </body>
 </html>
